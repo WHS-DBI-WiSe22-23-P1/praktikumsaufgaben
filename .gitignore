@@ -1,0 +1,6 @@
+/JDBC Test/target/
+*.iml
+
+*.class
+
+**/.idea/
