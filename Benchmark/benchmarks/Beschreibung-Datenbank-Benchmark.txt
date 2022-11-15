@@ -1,0 +1,91 @@
+Benchmark-Datenbank
+
+n-tps-Datenbank (tps = transactions per second)
+
+ACCOUNTS
+===================================
+create table accounts( 
+	accid int not null,
+	name char(20) not null,
+	balance int not null,
+	branchid int not null,
+	address char(68) not null,
+	primary key (accid),
+	foreign key (branchid) references branches);
+
+n * 100000 Tupel:	fortlaufender accid (1 bis n * 100000)
+		 	balance = 0
+		 	zufälliger branchid (1 bis n)
+		 	name & address = max. Stringlänge
+
+Speicherbedarf von 1 Tupel:	4 + 20 + 4 + 4 + 68 = 100 [byte]
+
+Speicherbedarf von n Tupel:	100 * 100000 * n = 10000000 * n	[byte]
+
+BRANCHES
+===================================
+create table branches( 
+	branchid int not null,
+	branchname char(20) not null,
+	balance int not null,
+	address char(72) not null,
+	primary key (branchid));
+
+n Tupel:	fortlaufender branchid (1 bis n)
+		balance = 0
+		branchname (20) & address (72)
+
+Speicherbedarf von 1 Tupel:	4 + 20 + 4 + 72 = 100 [byte]
+
+Speicherbedarf von n TTupel: 	100 * n [byte]
+
+TELLERS
+==================================
+create table tellers(
+	tellerid int not null,
+	tellername char(20) not null,
+	balance int not null,
+	branchid int not null,
+	address char(68) not null,
+	primary key (tellerid),
+	foreign key (branchid) references branches);
+
+n * 10 Tupel:	fortlaufender tellerid (1 bis n * 10)
+		balance = 0
+		zufälliger branchid (1 bis n)	
+		tellername (20) & address(68)
+
+Speicherbedarf von 1 Tupel:	4 + 20 + 4 + 4 + 68 = 100 [byte]
+
+Speicherbedarf von n Tupel:	100 * 10 * n = 1000 * n [byte]
+		
+HISTORY
+=================================
+create table history(
+	accid int not null,
+	tellerid int not null,
+	delta int not null,
+	branchid int not null,
+	accbalance int not null,
+	cmmnt char(30) not null,
+	foreign key (accid) references accounts,
+	foreign key (tellerid) references tellers,
+	foreign key (branchid) references branches);
+
+0 Tupel
+
+Speicherbedarf von 1 Tupel:	4 + 4 + 4 + 4 + 4 + 30 = 50 [byte]
+
+Speicherbedarf von n Tupel:	50 * n [byte]
+
+
+Datenbank Speicherbedarf für n 
+bei jeder Tabelle in byte:
+=================================
+n | Accounts | Branches | Tellers | History | Gesamterspeicherbedarf
+---------------------------------------------------------------------
+1 | 10000000 | 100 | 1000 | 50 | 10001150
+2 | 20000000 | 200 | 2000 | 100 | 20002300
+5 | 50000000 | 500 | 5000 | 2500 | 50008000
+10| 100000000 | 1000 | 10000 | 5000 | 100.016.000
+
