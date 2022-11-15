@@ -1,0 +1,11 @@
+0 Sekunden 109 Millisekunden fuer Gesamt ohne Connection bei INSERT TELLERS mit 10 Tupeln
+0 Sekunden 136 Millisekunden fuer Gesamt mit Connection bei INSERT TELLERS mit 10 Tupeln
+
+0 Sekunden 291 Millisekunden fuer Gesamt ohne Connection bei INSERT TELLERS mit 20 Tupeln
+0 Sekunden 315 Millisekunden fuer Gesamt mit Connection bei INSERT TELLERS mit 20 Tupeln
+
+0 Sekunden 660 Millisekunden fuer Gesamt ohne Connection bei INSERT TELLERS mit 50 Tupeln
+0 Sekunden 685 Millisekunden fuer Gesamt mit Connection bei INSERT TELLERS mit 50 Tupeln
+
+1 Sekunden 32 Millisekunden fuer Gesamt ohne Connection bei INSERT TELLERS mit 100 Tupeln
+1 Sekunden 66 Millisekunden fuer Gesamt mit Connection bei INSERT TELLERS mit 100 Tupeln

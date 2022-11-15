@@ -1,0 +1,2 @@
+1771 Sekunden 230 Millisekunden fuer Gesamt ohne Connection bei INSERT ACCOUNTS mit 100000 Tupeln
+1771 Sekunden 898 Millisekunden fuer Gesamt mit Connection bei INSERT ACCOUNTS mit 100000 Tupeln

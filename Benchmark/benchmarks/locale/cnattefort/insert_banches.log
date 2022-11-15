@@ -1,0 +1,11 @@
+0 Sekunden 16 Millisekunden fuer Gesamt ohne Connection bei INSERT BRANCHES mit 1 Tupeln
+0 Sekunden 44 Millisekunden fuer Gesamt mit Connection bei INSERT BRANCHES mit 1 Tupeln
+
+0 Sekunden 25 Millisekunden fuer Gesamt ohne Connection bei INSERT BRANCHES mit 2 Tupeln
+0 Sekunden 56 Millisekunden fuer Gesamt mit Connection bei INSERT BRANCHES mit 2 Tupeln
+
+0 Sekunden 59 Millisekunden fuer Gesamt ohne Connection bei INSERT BRANCHES mit 5 Tupeln
+0 Sekunden 90 Millisekunden fuer Gesamt mit Connection bei INSERT BRANCHES mit 5 Tupeln
+
+0 Sekunden 115 Millisekunden fuer Gesamt ohne Connection bei INSERT BRANCHES mit 10 Tupeln
+0 Sekunden 143 Millisekunden fuer Gesamt mit Connection bei INSERT BRANCHES mit 10 Tupeln
