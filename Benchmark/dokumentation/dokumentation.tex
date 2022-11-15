@@ -1,0 +1,94 @@
+%! Author = chris
+%! Date = 15.11.2022
+
+% Preamble
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{xspace}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{DBI-Benchmark-Datenbank}
+\author{
+    Christopher Nattefort \\
+    Istvan Kovacs \\
+    Luis Honderboom \\
+    Nik Benson}
+\date{November 2022}
+
+% Document
+\begin{document}
+    %deckblatt
+    \begin{titlepage}
+        \centering
+        \maketitle
+        \thispagestyle{empty}
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.5\textwidth]{img/whs}
+            \label{fig:figure}
+        \end{figure}
+
+    \end{titlepage}
+
+    %inhaltsverzeichnis
+    \newpage
+
+    \pagenumbering{roman}
+    \setcounter{page}{2}
+
+    \RaggedRight
+    \addtocontents{toc}{~\hfill\textbf{Seite}\par}
+    \tableofcontents
+
+    %abbildungsverzeichnis
+    \newpage
+    \addtocontents{lof}{~\hfill\textbf{Seite}\par}
+    \listoffigures
+
+    %tabllenverzeichnis
+    \newpage
+    \addtocontents{lot}{~\hfill\textbf{Seite}\par}
+    \listoftables
+
+    %codeverzeichnis
+    \newpage
+    \section*{Codeverzeichnis}
+    \renewcommand\listoflistingscaption{}
+    \addtocontents{lol}{~\hfill\textbf{Seite}\par}
+    \listoflistings
+
+    %literaturverzeichnis
+    \newpage
+    \begin{thebibliography}{9}
+        \bibitem{Quelle}
+        Quelle-Name \url{quele-url}
+    \end{thebibliography}
+
+    %einführung
+    \newpage
+
+    \justifying
+    \pagenumbering{arabic}
+
+    \section{Einführung}
+
+    \newpage
+
+    \section{}
+    \subsection{}
+    \subsection{}
+
+    %schluss
+    \newpage
+
+    \section{Schluss}
+    \subsection{Fazit}
+
+\end{document}
