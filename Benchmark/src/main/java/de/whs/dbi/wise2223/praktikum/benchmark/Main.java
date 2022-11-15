@@ -28,20 +28,22 @@ public class Main {
 
     public static void createTables() throws Exception {
         takeTime("Gesamt mit Connection", () -> {
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            withConnection(connection -> {
 
-            String[] queries = new String[]{"create table branches( branchid int not null, branchname char(20) not null, balance int not null, address char(72) not null, primary key (branchid) );", "create table accounts( accid int not null, name char(20) not null, balance int not null, branchid int not null, address char(68) not null, primary key (accid), foreign key (branchid) references branches(branchid) );", "create table tellers( tellerid int not null, tellername char(20) not null, balance int not null, branchid int not null, address char(68) not null, primary key (tellerid), foreign key (branchid) references branches(branchid) );", "create table history( accid int not null, tellerid int not null, delta int not null, branchid int not null, accbalance int not null, cmmnt char(30) not null, foreign key (accid) references accounts(accid), foreign key (tellerid) references tellers(tellerid), foreign key (branchid) references branches(branchid) );"};
+                String[] queries = new String[]{"create table branches( branchid int not null, branchname char(20) not null, balance int not null, address char(72) not null, primary key (branchid) );", "create table accounts( accid int not null, name char(20) not null, balance int not null, branchid int not null, address char(68) not null, primary key (accid), foreign key (branchid) references branches(branchid) );", "create table tellers( tellerid int not null, tellername char(20) not null, balance int not null, branchid int not null, address char(68) not null, primary key (tellerid), foreign key (branchid) references branches(branchid) );", "create table history( accid int not null, tellerid int not null, delta int not null, branchid int not null, accbalance int not null, cmmnt char(30) not null, foreign key (accid) references accounts(accid), foreign key (tellerid) references tellers(tellerid), foreign key (branchid) references branches(branchid) );"};
 
-            takeTime("Gesamt ohne Connection", () -> {
+                takeTime("Gesamt ohne Connection", () -> {
 
-                for (final String query : queries) {
-                    takeTime(query, () -> {
-                        connection.createStatement().execute(query);
-                        return null;
-                    });
-                }
-                return null;
+                    for (final String query : queries) {
+                        takeTime(query, () -> {
+                            connection.createStatement().execute(query);
+                            return null;
+                        });
+                    }
+                    return null;
+                });
             });
+
             return null;
         });
     }
@@ -114,4 +116,14 @@ public class Main {
         connection.close();
     }
 
+
+    static void withConnection(ConnectionFunction action) throws Exception {
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        action.call(connection);
+        connection.close();
+    }
+
+    interface ConnectionFunction {
+        void call(Connection connection) throws Exception;
+    }
 }
