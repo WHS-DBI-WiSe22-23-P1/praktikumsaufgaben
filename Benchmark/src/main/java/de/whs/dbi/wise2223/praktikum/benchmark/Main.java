@@ -14,12 +14,13 @@ public class Main {
     static final Map<String, Benchmark> benchmarks = new HashMap<>() {{
         put("create", new Create());
         put("drop", new Drop());
-        put("ntps.accounts", withIntInput(NTPSDatenbankErzeugen::insertAccounts));
         put("ntps.branches", withIntInput(NTPSDatenbankErzeugen::insertBranches));
+        put("ntps.accounts", withIntInput(NTPSDatenbankErzeugen::insertAccounts));
         put("ntps.tellers", withIntInput(NTPSDatenbankErzeugen::insertTellers));
     }};
 
     public static void main(String[] args) throws Exception {
+        System.out.printf("Wähle zwischen %s:%n", String.join(", ", benchmarks.keySet()));
         withInput(input -> {
             while (input.hasNext()) {
                 Benchmark benchmark = benchmarks.get(input.next());
