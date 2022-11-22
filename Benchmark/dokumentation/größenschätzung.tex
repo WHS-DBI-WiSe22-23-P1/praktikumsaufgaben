@@ -1,0 +1,22 @@
+Nachfolgend wird die Größe der "Rohdaten" für eine 1-tps-Datenbank bzw. allgemein für eine n-tps-Datenbank bestimmt.
+Die betrachtete Datenbank hat vier initialisierte Relationen (Accounts, Branches, Tellers und History).
+Diese werden durch einen vorgegebenen \textbf{Skalierungsfaktor n} in der n-tps-Datenbank skaliert. Also je nach
+Angabe werden die Datenbankeinträge, sowie die Größe der Datenbank erweitert oder verringert. Die einzelnen Skalierungsfaktoren
+der verschiedenen Relationen zur n betragen einmal bei \textbf{Accounts (n * 100.000) Tupel}, bei \textbf{Braches n Tupel},
+bei \textbf{Tellers (n * 10) Tupel} und \textbf{0 Tupel bei History}. Diese werden hiernach in einer Tabelle mit den
+verschiedenen Relationen und deren Tupelanzahl aufgezeigt
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{2.5cm}|c|c|c|c|}
+        \hline
+        Relation & Accounts & Branches & Tellers & Histroy \\  \hline
+        n = 1 & 100.000 & 1 & 10 & 0 \\ \hline
+        n = 2 & 200.000 & 2 & 20 & 0 \\ \hline
+        n = 5 & 500.000 & 5 & 50 & 0 \\ \hline
+        n = 10 & 1.000.000 & 10 & 100 & 0 \\ \hline
+        n = 20 & 2.000.000& 20 & 200 & 0 \\ \hline
+        n = 50 & 5.000.000& 50 & 500 & 0 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für die Größe der Rohdaten in der n-tps-Datenbank}
+    \label{table:1}
+\end{table}

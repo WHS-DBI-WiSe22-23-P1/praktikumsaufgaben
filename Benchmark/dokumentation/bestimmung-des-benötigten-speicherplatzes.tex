@@ -1,0 +1,42 @@
+Die Bestimmung des \textbf{benötigten Speicherplatz der n-tps-Datenbank} erfolgt durch die \textbf{Summierung der Größen der verwendeten MySQL-Datentypen in den verschiedenen Relationen} bei der Speicherung. Anschließend wird der erforderliche Speicherplatz der einzelnen Datentypen gezeigt, um später den Speicherbedarf der Relationen anhand der abgespeicherten Datentypen zu berechnen.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{3cm}|c|}
+        \hline
+        Datentyp & Speicherbedarf [B] \\  \hline
+        INT(size) & 4 \\ \hline
+        CHAR(size) & size \\ \hline
+    \end{tabular}
+    \caption{Tabelle für den Speicherbedarf der abgespeicherten MySQL-Datentypen in Bytes (Quelle: https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html, https://dzone.com/articles/mysql-data-types-an-overview-of-the-data-types-in)}
+    \label{table:2}
+\end{table} \\
+In der folgenden Tabelle werden nun die verwendeten Datentypen der einzelnen Relationen aufgelistet und daraus der Gesamtspeicherbedarf eines Tupel in Bytes aufsummiert.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{1.5cm}|l|c|}
+        \hline
+        Relation & verwendete Datentype(n) & Gesamtspeicherbedarf [B] \\  \hline
+        Accounts & 3xINT, 1xCHAR(20), 1xCHAR(68) & 100 \\ \hline
+        Branches & 2xINT, 1xCHAR(20), 1xCHAR(72) & 100 \\ \hline
+        Tellers & 3xINT, 1xCHAR(20), 1xCHAR(68) & 100 \\ \hline
+        Histroy & 5xINT, 1xCHAR(30) & 50 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für die verwendeten Datentypen und der Gesamtspeicherbedarf eines Tupels in einer Relation in Bytes}
+    \label{table:3}
+\end{table} \\
+Zum Schluss wird der Speicherbedarf der verschiedenen Relationen im Hinblick auf den Skalierungsfaktor n dargelegt.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        Faktor & Accounts & Branches & Tellers & History & Gesamtspeicherbedarf [MB] \\  \hline
+        n=1 & 10 & 0.0001 & 0.001 & 0 & 10,0011 \\ \hline
+        n=2 & 20 & 0.0002 & 0.002 & 0 & 20,0022 \\ \hline
+        n=5 & 50 & 0.0005 & 0.005 & 0 & 50,0055 \\ \hline
+        n=10 & 100 & 0.001 & 0.01 & 0 & 100,011 \\ \hline
+        n=20 & 200 & 0.002 & 0.02 & 0 & 200,022 \\ \hline
+        n=50 & 500 & 0.005 & 0.05 & 0 & 500,055 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für die verwendeten Datentypen und der Gesamtspeicherbedarf der Tupel in einer Relation in Megabytes}
+    \label{table:4}
+\end{table} \\
