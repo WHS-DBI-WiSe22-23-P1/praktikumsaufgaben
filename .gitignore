@@ -4,4 +4,9 @@
 *.class
 
 **/.idea/
+/3/out/
+/3/.idea/
+/3/-DatabaseProgramm.iml
+/3/.idea
+
 out/
