@@ -14,7 +14,7 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertAccounts(int n) throws SQLException {
-        withConnection(connection -> takeTime("Gesamt ohne Connection", () -> {
+        withConnection(connection -> takeTime("Gesamt ohne Connection -" + (n * 100000) + " Tupel", () -> {
             for (int i = 0; i < n * 100000; i++) {
                 int randomBranchId = RANDOM.nextInt(n);
 
@@ -29,7 +29,7 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertBranches(int n) throws SQLException {
-        withConnection(connection -> takeTime("Gesamt ohne Connection", () -> {
+        withConnection(connection -> takeTime("Gesamt ohne Connection -" + n + " Tupel", () -> {
 
             for (int i = 0; i < n; i++) {
                 String branchName = "branchname-----%05d".formatted(i);
@@ -43,7 +43,7 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertTellers(int n) throws SQLException {
-        withConnection(connection -> takeTime("Gesamt ohne Connection", () -> {
+        withConnection(connection -> takeTime("Gesamt ohne Connection - " + (n*10) + " Tupel", () -> {
             for (int i = 0; i < n * 10; i++) {
                 int randomBranchId = RANDOM.nextInt(n);
 
