@@ -1,0 +1,10 @@
+Datenbank Optimierung
+===================================
+- Programmierschnittelle -> JDBC-Treiber
+- Programmierung -> PreparedStatements, Konfliktvermeidung (nebenläufigen Zugriff), Kommuniktionsoverhead
+(Batch-Verarbeitung / Storage Procedures)
+- Anfrageoptimierung (-> Explain Statement)
+- DBMS-Konfigurationsparameter (Puffergröße, Nutzung mehrere Festplatten, Veränderung der Sperrgranulat)
+- DB-Schema-Optimierung (De- / Normalisierung, Verteilung)
+- physikalisches DB-Schema (Zugriffsstrukturen, Indizes)
+- möglicher Verzicht auf ACID (Eigenschaften)
