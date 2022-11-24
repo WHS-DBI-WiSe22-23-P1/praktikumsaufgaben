@@ -1,6 +1,9 @@
 package de.whs.dbi.wise2223.praktikum.benchmark.benchmarks;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.takeTime;
@@ -14,14 +17,21 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertAccounts(int n) throws SQLException {
-        withConnection(connection -> takeTime("Gesamt ohne Connection -" + (n * 100000) + " Tupel", () -> {
-            for (int i = 0; i < n * 100000; i++) {
-                int randomBranchId = RANDOM.nextInt(n);
+        final int queries = n * 100_000;
+        final int duffConstant = 10;
+        withConnection(connection -> takeTime("Gesamt ohne Connection mit %d Tupeln".formatted(queries), () -> {
+            for (int i = 0; i < queries; i+= duffConstant) {
+                List<String> tupels = new ArrayList<>(duffConstant);
 
-                String accountsName = "name------%010d".formatted(i);
-                String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
+                for(int j = 0; j < duffConstant; j++) {
+                    int randomBranchId = RANDOM.nextInt(n);
 
-                String query = "INSERT INTO accounts (accid, name, balance, branchid, address) " + "VALUES (%d, '%s', %d, %d, '%s');".formatted(i, accountsName, 0, randomBranchId, accountsAddress);
+                    String accountsName = "name------%010d".formatted(i);
+                    String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
+
+                    tupels.add("(%d, '%s', %d, %d, '%s')".formatted(i + j, accountsName, 0, randomBranchId, accountsAddress));
+                }
+                String query = "INSERT INTO accounts (accid, name, balance, branchid, address) VALUES %s;".formatted(String.join(", ", tupels));
 
                 connection.createStatement().execute(query);
             }

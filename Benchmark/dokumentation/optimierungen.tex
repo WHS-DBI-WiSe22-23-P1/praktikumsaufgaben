@@ -1,2 +1,89 @@
-\subsection{Code}
-\subsection{DBMS}
+\subsection{Code}\label{subsec:code}
+\begin{figure}[ht!]
+    \label{fig:duff-messungen}
+    \begin{tikzpicture}[baseline]
+        \begin{axis}
+        [
+            small,
+            width=\paperwidth/4,
+            title={INSERT Statements},
+            xlabel={Tupel pro Statement},
+            ylabel={Zeit},
+            y unit=\si{\second},
+            scale only axis,
+            xtick={1,10,100,1000,10000,100000},
+            ytick={3,7,41,176,1647},
+            yticklabels={3,7,41,176,1\_647},
+            xmajorgrids,
+            ymajorgrids,
+            xmin=1,
+            xmax=100000,
+            ymin=0,
+            ymax=1700,
+            xmode=log,
+            ymode=log,
+        ]
+
+            \addplot[only marks] table [
+            mark=*,
+            col sep=semicolon,
+            x={duffConstant},
+            y={time},
+            ]
+                {duff_messungen.csv};
+
+            \addplot[thick, red] table [
+            col sep=semicolon,
+            x={duffConstant},
+            y={time},
+            y = {create col/linear regression={xmode=log,ymode=log, y={time},x={duffConstant}}},
+            ]
+                {duff_messungen.csv};
+            \addlegendentry{$\log{y}=\pgfmathprintnumber{\pgfplotstableregressiona} \cdot \log{x} \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+        \end{axis}
+    \end{tikzpicture}%
+    \begin{tikzpicture}[baseline]
+        \begin{axis}
+        [
+            small,
+            width=\paperwidth/4,
+            title={Batches},
+            xlabel={Tupel pro Statement},
+            ylabel={Zeit},
+            y unit=\si{\second},
+            scale only axis,
+            xtick={1,10,100,1000,10000,100000},
+            ytick={3,7,41,176,1647},
+            yticklabels={3,7,41,176,1\_647},
+            xmajorgrids,
+            ymajorgrids,
+            xmin=1,
+            xmax=100000,
+            ymin=0,
+            ymax=1700,
+            xmode=log,
+            ymode=log,
+        ]
+
+            \addplot[only marks] table [
+            mark=*,
+            col sep=semicolon,
+            x={duffConstant},
+            y={time},
+            ]
+                {batch_messungen.csv};
+
+            \addplot[thick, red] table [
+            col sep=semicolon,
+            x={duffConstant},
+            y={time},
+            y = {create col/linear regression={xmode=log,ymode=log, y={time},x={duffConstant}}},
+            ]
+                {batch_messungen.csv};
+            \addlegendentry{$\log{y}=\pgfmathprintnumber{\pgfplotstableregressiona} \cdot \log{x} \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Messungen bei unterteilung in verschieden viele Statements}
+\end{figure}
+
+\subsection{DBMS}\label{subsec:dbms}

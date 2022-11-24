@@ -12,15 +12,22 @@ import java.util.Scanner;
 import static de.whs.dbi.wise2223.praktikum.benchmark.ConnectionData.*;
 
 public class Helpers {
+    private static Scanner scanner = null;
 
     public static Benchmark withIntInput(BenchmarkWithIntInput benchmark) {
         return () -> withInput(input -> benchmark.run(input.nextInt()));
     }
 
     public static void withInput(InputFunction action) throws Exception {
-        Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        if(scanner != null) {
+            action.call(scanner);
+            return;
+        }
+
+        scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
         action.call(scanner);
         scanner.close();
+        scanner = null;
     }
 
     public static void takeTime(String name, TimedFunction action) throws SQLException {
