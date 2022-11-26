@@ -20,14 +20,24 @@ public class Main {
     }};
 
     public static void main(String[] args) throws Exception {
-        System.out.printf("Wähle zwischen %s:%n", String.join(", ", benchmarks.keySet()));
+        printOptions();
         withInput(input -> {
             while (input.hasNext()) {
-                Benchmark benchmark = benchmarks.get(input.next());
-                if (benchmark != null) {
-                    benchmark.run();
-                }
+                final String prompt = input.next();
+
+                if(benchmarks.containsKey(prompt))
+                    benchmarks.get(prompt).run();
+                else if("exit".equals(prompt))
+                    break;
+                else if ("options".equals(prompt))
+                    printOptions();
+                else
+                    System.out.printf("%s is not a valid option.%n", prompt);
             }
         });
+    }
+
+    private static void printOptions() {
+        System.out.printf("Wähle zwischen %s:%n", String.join(", ", benchmarks.keySet()));
     }
 }

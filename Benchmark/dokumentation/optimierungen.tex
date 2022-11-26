@@ -1,6 +1,19 @@
+Um die ausführung der Statements zu beschleunigen, gibt es zwei Möglichkeiten:
+Performanteren Code oder eine Performanteres DBMS~.
+Im Folgenden sind zu beiden Möglichkeiten unsere Ansätze aufgeführt.
+
 \subsection{Code}\label{subsec:code}
+Schauen wir uns die 4 Methoden an, das Erstellen der Datenbanken, das Einfügen der Branches, das Einfügen der Accounts und das Einfügen der Automaten, so fällt schnell auf, dass keine der anderen Operationen einen signifikanten Zeitaufwand im Verhältnis zum Einfügen der Accounts benötigt.
+Aus diesem Grund werden sich unsere Bemühungen bezüglich der Optimierungen im Code auf diese Teilaufgabe beziehen.
+Hier ist uns vor allem eine Stellschraube in den Sinn gekommen:
+Die Anzahl der Statements.
+Dazu haben wir zwei Möglichkeiten gefunden:
+\begin{itemize}
+    \item Das einfügen mehrerer Tupel mit einem Statement sowie
+    \item das ausführen mehrerer Teilstatements in einem Statement (Batching).
+\end{itemize}
+Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skala in Abbildung~\ref{fig:merged-statements-graph} dargestellt.
 \begin{figure}[ht!]
-    \label{fig:duff-messungen}
     \begin{tikzpicture}[baseline]
         \begin{axis}
         [
@@ -53,8 +66,8 @@
             y unit=\si{\second},
             scale only axis,
             xtick={1,10,100,1000,10000,100000},
-            ytick={3,7,41,176,1647},
-            yticklabels={3,7,41,176,1\_647},
+            ytick={1321,1352,1501,1544,1608,1647},
+            yticklabels={1\_321,1\_352,1\_501,1\_544,1\_608,1\_647},
             xmajorgrids,
             ymajorgrids,
             xmin=1,
@@ -84,6 +97,16 @@
         \end{axis}
     \end{tikzpicture}
     \caption{Messungen bei unterteilung in verschieden viele Statements}
+    \label{fig:merged-statements-graph}
 \end{figure}
+Schauen wir uns zunächst die Variante mit den vereinten INSERT Statements an, so fällt uns auf, dass die Messwerte annähernd auf der logarithmischen annäherung liegen.
+Desto weniger Statements, desto schneller ist das Programm.
+Im Vergleich dazu ist bei den Batches keine Konsistenz in den Messwerten zu erkennen.
+Da jede Messung über 20 Minuten gedauert hat verzichten wir auf eine erneute Messung und schließen, dass beim Batching lediglich ein kleiner vorteil, unabhängig der anzahl der Batches, entsteht.
+Es sind also die Commits, die Zeit benötigen.
+Deaktivieren wir Autocommit so läuft auch die variante mit Batching deutlich schneller, auch wenn sie dennoch nicht mit den einzelnen Statements mithalten kann.
+In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen Tupeln festlegen.
+Da wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.
+
 
 \subsection{DBMS}\label{subsec:dbms}

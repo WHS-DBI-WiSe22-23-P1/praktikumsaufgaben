@@ -1,0 +1,5 @@
+1321 Sekunden 27 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln mit tupelsPerBatch = 10
+1501 Sekunden 473 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln mit tupelsPerBatch = 100
+1352 Sekunden 483 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln mit tupelsPerBatch = 1000
+1544 Sekunden 284 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln mit tupelsPerBatch = 10000
+1608 Sekunden 687 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln mit tupelsPerBatch = 100000
