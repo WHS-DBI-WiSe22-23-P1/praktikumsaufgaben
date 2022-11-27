@@ -1,11 +1,10 @@
 package de.whs.dbi.wise2223.praktikum.benchmark.benchmarks;
 
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.takeTime;
 import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.withConnection;
@@ -18,25 +17,22 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertAccounts(int n) throws SQLException {
-        final int queries = n * 100_000;
-        final int tupelsPerBatch = 1_000;
-        withConnection(connection -> takeTime("Gesamt ohne Connection mit %d Tupeln".formatted(queries), () -> {
-            connection.setAutoCommit(false);
+        final int count = n * 100_000;
+        final int threadsCount = 10;
+        final int tupelsPerThread = count / threadsCount;
+        withConnection(connection -> takeTime("Gesamt ohne Connection mit %d Tupeln".formatted(count), () -> {
+            final CompletableFuture<Boolean>[] threads = new CompletableFuture[threadsCount];
 
-            for (int i = 0; i < queries; i+= tupelsPerBatch) {
-                Statement statement = connection.createStatement();
-                for(int j = 0; j < tupelsPerBatch; j++) {
-                    int randomBranchId = RANDOM.nextInt(n);
+            for (int i = 0; i < threadsCount; i++) {
+                threads[i] = insertAccountsAsync(tupelsPerThread, n, i * tupelsPerThread, connection);
+            }
 
-                    String accountsName = "name------%010d".formatted(i);
-                    String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
-
-                    String tupel = "(%d, '%s', %d, %d, '%s')".formatted(i + j, accountsName, 0, randomBranchId, accountsAddress);
-                    String query = "INSERT INTO accounts (accid, name, balance, branchid, address) VALUES %s;".formatted(tupel);
-                statement.addBatch(query);
+            for (int i = 0; i < threadsCount; i++) {
+                try {
+                    threads[i].get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
-                statement.executeBatch();
-                connection.commit();
             }
         }));
     }
@@ -56,7 +52,9 @@ public class NTPSDatenbankErzeugen {
     }
 
     public static void insertTellers(int n) throws SQLException {
-        withConnection(connection -> takeTime("Gesamt ohne Connection - " + (n*10) + " Tupel", () -> {
+        withConnection(connection -> takeTime("Gesamt ohne Connection - " + (n * 10) + " Tupel", () -> {
+            insertAccountsAsync(10, n, 0, connection);
+
             for (int i = 0; i < n * 10; i++) {
                 int randomBranchId = RANDOM.nextInt(n);
 
@@ -68,5 +66,26 @@ public class NTPSDatenbankErzeugen {
                 connection.createStatement().execute(query);
             }
         }));
+    }
+
+    private static CompletableFuture<Boolean> insertAccountsAsync(final int count, final int n, final int firstIndex, final Connection connection) {
+        final String[] tupels = new String[count];
+        for (int i = 0; i < count; i++) {
+
+            int randomBranchId = RANDOM.nextInt(n);
+
+            String accountsName = "name------%010d".formatted(i + firstIndex);
+            String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
+
+            tupels[i] = "(%d, '%s', %d, %d, '%s')".formatted(i + firstIndex, accountsName, 0, randomBranchId, accountsAddress);
+        }
+
+        String query = "INSERT INTO accounts (accid, name, balance, branchid, address) VALUES %s;".formatted(String.join(", ", tupels));
+
+        try {
+            return CompletableFuture.completedFuture(connection.createStatement().execute(query));
+        } catch (SQLException e) {
+            return CompletableFuture.failedFuture(e);
+        }
     }
 }

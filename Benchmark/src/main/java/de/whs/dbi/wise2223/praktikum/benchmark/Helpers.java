@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import static de.whs.dbi.wise2223.praktikum.benchmark.ConnectionData.*;
 

@@ -1,19 +1,16 @@
-Um die ausführung der Statements zu beschleunigen, gibt es zwei Möglichkeiten:
-Performanteren Code oder eine Performanteres DBMS~.
-Im Folgenden sind zu beiden Möglichkeiten unsere Ansätze aufgeführt.
+Um die ausführung der Statements zu beschleunigen, gibt es zwei Möglichkeiten: Performanteren Code oder eine Performanteres DBMS~. Im Folgenden sind zu beiden Möglichkeiten unsere Ansätze aufgeführt.
 
 \subsection{Code}\label{subsec:code}
 Schauen wir uns die 4 Methoden an, das Erstellen der Datenbanken, das Einfügen der Branches, das Einfügen der Accounts und das Einfügen der Automaten, so fällt schnell auf, dass keine der anderen Operationen einen signifikanten Zeitaufwand im Verhältnis zum Einfügen der Accounts benötigt.
 Aus diesem Grund werden sich unsere Bemühungen bezüglich der Optimierungen im Code auf diese Teilaufgabe beziehen.
-Hier ist uns vor allem eine Stellschraube in den Sinn gekommen:
-Die Anzahl der Statements.
+Hier ist uns vor allem eine Stellschraube in den Sinn gekommen: Die Anzahl der Statements.
 Dazu haben wir zwei Möglichkeiten gefunden:
 \begin{itemize}
     \item Das einfügen mehrerer Tupel mit einem Statement sowie
     \item das ausführen mehrerer Teilstatements in einem Statement (Batching).
 \end{itemize}
 Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skala in Abbildung~\ref{fig:merged-statements-graph} dargestellt.
-\begin{figure}[ht!]
+\begin{figure}
     \begin{tikzpicture}[baseline]
         \begin{axis}
         [
@@ -32,7 +29,7 @@ Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skal
             xmin=1,
             xmax=100000,
             ymin=0,
-            ymax=1700,
+            ymax=2000,
             xmode=log,
             ymode=log,
         ]
@@ -66,34 +63,36 @@ Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skal
             y unit=\si{\second},
             scale only axis,
             xtick={1,10,100,1000,10000,100000},
-            ytick={1321,1352,1501,1544,1608,1647},
-            yticklabels={1\_321,1\_352,1\_501,1\_544,1\_608,1\_647},
+            ytick={150,300,1500,2000},
+            yticklabels={150,300,1\_500,2\_000},
             xmajorgrids,
             ymajorgrids,
             xmin=1,
             xmax=100000,
             ymin=0,
-            ymax=1700,
+            ymax=2000,
             xmode=log,
             ymode=log,
+            legend style={at={(0.97,0.6)},anchor=east}
         ]
 
-            \addplot[only marks] table [
+            \addplot[only marks, blue] table [
             mark=*,
             col sep=semicolon,
-            x={duffConstant},
+            x={tupelsPerBatch},
             y={time},
             ]
                 {batch_messungen.csv};
+            \addlegendentry{Mit Autocommit}
 
-            \addplot[thick, red] table [
+            \addplot[only marks, green] table [
+            mark=*,
             col sep=semicolon,
-            x={duffConstant},
+            x={tupelsPerBatch},
             y={time},
-            y = {create col/linear regression={xmode=log,ymode=log, y={time},x={duffConstant}}},
             ]
-                {batch_messungen.csv};
-            \addlegendentry{$\log{y}=\pgfmathprintnumber{\pgfplotstableregressiona} \cdot \log{x} \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+                {batch_no_autocommit_messungen.csv};
+            \addlegendentry{Ohne Autocommit}
         \end{axis}
     \end{tikzpicture}
     \caption{Messungen bei unterteilung in verschieden viele Statements}
@@ -106,7 +105,8 @@ Da jede Messung über 20 Minuten gedauert hat verzichten wir auf eine erneute Me
 Es sind also die Commits, die Zeit benötigen.
 Deaktivieren wir Autocommit so läuft auch die variante mit Batching deutlich schneller, auch wenn sie dennoch nicht mit den einzelnen Statements mithalten kann.
 In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen Tupeln festlegen.
-Da wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.
 
+
+\paragraph{Da} wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.
 
 \subsection{DBMS}\label{subsec:dbms}
