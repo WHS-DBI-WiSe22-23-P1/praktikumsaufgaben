@@ -10,7 +10,7 @@ Dazu haben wir zwei Möglichkeiten gefunden:
     \item das ausführen mehrerer Teilstatements in einem Statement (Batching).
 \end{itemize}
 Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skala in Abbildung~\ref{fig:merged-statements-graph} dargestellt.
-\begin{figure}
+\begin{figure}[h!]
     \begin{tikzpicture}[baseline]
         \begin{axis}
         [
@@ -108,5 +108,52 @@ In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen
 
 
 \paragraph{Da} wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.
+\begin{figure}[h!]
+    \center
+    \begin{tikzpicture}[baseline]
+        \begin{axis}
+        [
+            small,
+            xlabel={n},
+            ylabel={Zeit},
+            y unit=\si{\second},
+            scale only axis,
+            xtick={1,10,20,50},
+            ytick={3,41,143,405},
+            yticklabels={3,41,143,405},
+            xmajorgrids,
+            ymajorgrids,
+            xmin=1,
+            xmax=50,
+            ymin=0,
+            ymax=500,
+        ]
+
+            \addplot[only marks] table [
+            mark=*,
+            col sep=semicolon,
+            x={n},
+            y={time},
+            ]
+                {async_messungen.csv};
+
+            \addplot[thick, red] table [
+            col sep=semicolon,
+            x={n},
+            y={time},
+            y = {create col/linear regression={y={time},x={n}}},
+            ]
+                {async_messungen.csv};
+            \addlegendentry{$y=\pgfmathprintnumber{\pgfplotstableregressiona} \cdot x \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Messungen bei asynchroner Implementierung}
+    \label{fig:async-graph}
+\end{figure}
+Abbildung~\ref{fig:async-graph} zeigt uns, dass die Asynchrone Implementierung linear skaliert.
+In dieser Implementierung werden 10 Threads verwendet.
+Damit haben wir, mit $\sim\Theta(n)$, eine gute Laufzeitkomplexität erreicht sowie im Vergleich mit anderen Messungen aus dem Benchmark Portal auch eine gute absolute Laufzeit.
+Deshalb beenden wir an dieser Stelle unsere Optimierungsversuche.
+
 
 \subsection{DBMS}\label{subsec:dbms}
