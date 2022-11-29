@@ -119,17 +119,18 @@ In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen
             y unit=\si{\second},
             scale only axis,
             xtick={1,10,20,50},
-            ytick={4,44,84,295},
-            yticklabels={4,44,84,295},
+            ytick={3,4,32,44,61,84,195,295},
+            yticklabels={,4,,44,,84,195,295},
             xmajorgrids,
             ymajorgrids,
             xmin=1,
             xmax=50,
             ymin=0,
             ymax=300,
+            legend style={at={(0.03,0.97)},anchor=north west}
         ]
 
-            \addplot[only marks] table [
+            \addplot[only marks, green] table [
             mark=*,
             col sep=semicolon,
             x={n},
@@ -144,7 +145,31 @@ In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen
             y = {create col/linear regression={y={time},x={n}}},
             ]
                 {async_messungen.csv};
-            \addlegendentry{$y=\pgfmathprintnumber{\pgfplotstableregressiona} \cdot x \pgfmathprintnumber[print sign]{\pgfplotstableregressionb}$}
+            \xdef\slopeA{\pgfplotstableregressiona} %<-- might be handy occasionally
+            \xdef\interceptA{\pgfplotstableregressionb}
+
+            \addplot[only marks, blue] table [
+            mark=*,
+            col sep=semicolon,
+            x={n},
+            y={time},
+            ]
+                {async_messungen_server.csv};
+
+            \addplot[thick, cyan] table [
+            col sep=semicolon,
+            x={n},
+            y={time},
+            y = {create col/linear regression={y={time},x={n}}},
+            ]
+                {async_messungen_server.csv};
+            \xdef\slopeB{\pgfplotstableregressiona} %<-- might be handy occasionally
+            \xdef\interceptB{\pgfplotstableregressionb}
+
+            \addlegendentry{Server}
+            \addlegendentry{$y=\pgfmathprintnumber{\slopeA} \cdot x \pgfmathprintnumber[print sign]{\interceptA}$}
+            \addlegendentry{Remote}
+            \addlegendentry{$y=\pgfmathprintnumber{\slopeB} \cdot x \pgfmathprintnumber[print sign]{\interceptB}$}
         \end{axis}
     \end{tikzpicture}
     \caption{Messungen bei asynchroner Implementierung}
