@@ -85,6 +85,10 @@
 \author[4]{Nik Benson}
 \affil[4]{202123513}
 
+
+\usepackage[backend=biber,style=iso-authoryear]{biblatex}
+\bibliography{sheet4}
+
 \begin{document}
     \pagenumbering{gobble}
     \include{title}
@@ -95,33 +99,37 @@
     \newpage
     \addcontentsline{toc}{section}{Abbildungsverzeichnis}
     \listoffigures
-    \addcontentsline{toc}{section}{Codeverzeichnis}
-    \lstlistoflistings
+    \addcontentsline{toc}{section}{Tabellenvrzeichnis}
+    \listoftables
     \newpage
     \pagenumbering{arabic}
 
 
     \section{Vorwort}\label{sec:vorwort}
-    \input{vorwort}
+        \input{vorwort}
 
 
     \section{Größenschätzung}\label{sec:groenschatzung}
-    \input{größenschätzung}
+        \input{größenschätzung}
 
 
     \section{Bestimmung des benötigten Speicherplatzes}\label{sec:bestimmung-des-benotigten-speicherplatzes}
-    \input{bestimmung-des-benötigten-speicherplatzes}
+        \input{bestimmung-des-benoetigten-speicherplatzes.tex}
 
 
     \section{Messungen}\label{sec:messungen}
-    \input{messungen}
+        \input{messungen}
 
 
     \section{Optimierungen}\label{sec:optimierungen}
-    \input{optimierungen}
+        \input{optimierungen}
 
 
     \section{Fazit}\label{sec:fazit}
-    \input{fazit}
+        \input{fazit}
+
+        \newpage
+        \pagenumbering{roman}
+        \printbibliography
 
 \end{document}
