@@ -1,3 +1,81 @@
-\subsection{Server}\label{subsec:server}
+Anschließend werden die Messergebnisse der Laufzeit bei den verschiedenen Optimierung des Codes, sowie der Datenbankmanagement-Konfigurationen gezeigt.
 
+\subsection{Server}\label{subsec:server}
+Zunächst die Messergebnisse bei der Erstellung und Verarbeitung der Anfragen lokal auf dem DBMS mit Docker-Einbindung.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        DB 1 (n = 1) [s] & DB 2 (n = 2) [s] & Bemerkungen \\  \hline
+        1749 & 0 & n = 1: 100.000 Tupel \\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Lokal - 1. Version}
+    \label{tab:5}
+\end{table} \\
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        DB 1 (n = 1) [s] & Bemerkungen \\  \hline
+        1321 & 10 Tupel pro Batch \\ \hline
+        1501 & 100 Tupel pro Batch \\ \hline
+        1352 & 1.000 Tupel pro Batch \\ \hline
+        1544 & 10.000 Tupel pro Batch \\ \hline
+        1608 & 100.000 Tupel pro Batch \\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Lokal - 2.1 Version (Optimierung: Batch - Bündeln der Statements)}
+    \label{tab:6}
+\end{table} \\
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        DB 1 (n = 1) [s] & Bemerkungen \\  \hline
+        1943 & 1 Tupel pro Batch \\ \hline
+        308 & 10 Tupel pro Batch \\ \hline
+        143 & 100 Tupel pro Batch \\ \hline
+        150 & 1.000 Tupel pro Batch \\ \hline
+        153 & 10.000 Tupel pro Batch \\ \hline
+        135 & 100.000 Tupel pro Batch \\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Lokal - 2.2 Version (Optimierung: Batch - Bündeln der Statements + ohne AutoCommit)}
+    \label{tab:7}
+\end{table} \\
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        DB 1 (n = 10) [s] & DB 2 (n = 20) [s] & DB 3 (n = 50) [s] & Bemerkungen \\  \hline
+        44 & 84 & 295 & Multithreading (Java Async Await)\\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Lokal - 3. Version (Optimierung: Multithreading - asynchrone Ausführung)}
+    \label{tab:8}
+\end{table} \\
+
+\newpage
 \subsection{Remote}\label{subsec:remote}
+Hierauf die Messergebnisse bei der lokalen Erstellung und externen Verarbeitung der Anfragen auf dem VM-DBMS. \\
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        DB 1 (n = 1) [s] & DBI 2 (n = 2) [s] & Bemerkungen \\  \hline
+        466 & 791 & n = 1: 100.000 Tupel / n = 2: 200.000 Tupel\\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Remote - 1. Version}
+    \label{tab:9}
+\end{table} \\
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        DB 1 (n = 10) [s] & DB 2 (n = 20) [s] & DB 3 (n = 50) [s] & Bemerkungen \\  \hline
+        32 & 61 & 195 & Multithreading (Java Async Await)\\ \hline
+    \end{tabular}
+    \caption{Tabelle für Messergebnisse in Sekunden: Remote - 3. Version (Optimierung: Multithreading - asynchrone Ausführung)}
+    \label{tab:10}
+\end{table} \\
