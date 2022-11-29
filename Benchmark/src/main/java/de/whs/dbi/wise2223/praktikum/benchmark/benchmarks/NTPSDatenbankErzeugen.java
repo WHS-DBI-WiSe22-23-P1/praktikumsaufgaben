@@ -69,23 +69,26 @@ public class NTPSDatenbankErzeugen {
     }
 
     private static CompletableFuture<Boolean> insertAccountsAsync(final int count, final int n, final int firstIndex, final Connection connection) {
-        final String[] tupels = new String[count];
-        for (int i = 0; i < count; i++) {
+            return CompletableFuture.supplyAsync(() -> {
+                final String[] tupels = new String[count];
+                for (int i = 0; i < count; i++) {
 
-            int randomBranchId = RANDOM.nextInt(n);
+                    int randomBranchId = RANDOM.nextInt(n);
 
-            String accountsName = "name------%010d".formatted(i + firstIndex);
-            String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
+                    String accountsName = "name------%010d".formatted(i + firstIndex);
+                    String accountsAddress = ("accountsaddress-------------------------------------------%010d").formatted(i);
 
-            tupels[i] = "(%d, '%s', %d, %d, '%s')".formatted(i + firstIndex, accountsName, 0, randomBranchId, accountsAddress);
-        }
+                    tupels[i] = "(%d, '%s', %d, %d, '%s')".formatted(i + firstIndex, accountsName, 0, randomBranchId, accountsAddress);
+                }
 
-        String query = "INSERT INTO accounts (accid, name, balance, branchid, address) VALUES %s;".formatted(String.join(", ", tupels));
+                String query = "INSERT INTO accounts (accid, name, balance, branchid, address) VALUES %s;".formatted(String.join(", ", tupels));
 
-        try {
-            return CompletableFuture.completedFuture(connection.createStatement().execute(query));
-        } catch (SQLException e) {
-            return CompletableFuture.failedFuture(e);
-        }
+                try {
+                    return connection.createStatement().execute(query);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
     }
 }
