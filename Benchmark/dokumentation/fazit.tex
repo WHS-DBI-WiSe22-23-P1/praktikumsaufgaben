@@ -1,3 +1,8 @@
-Zusammenfassend kann man sagen, dass die vorgenommen optimierungen die Laufzeit deutlich verbessert hat.
-Denn mit der ersten Version unseres Programms haben wir für n = 1 fast 466 Sekunden gebraucht.
-Mithilfe unserer Optimierungen, , sind wir dann für n = 10 bei einer Laufzeit von 32 Sekunden.
+Zusammenfassend kann man sagen, dass die vorgenommen Optimierungen im Hinblick auf einen performanteren Code die Laufzeit deutlich verbessert haben.
+Denn bei der ersten Version unseres Programms wurde eine schlechte Laufzeit für nur n = 1 (100.000 Tupel in Accounts) mit 466 Sekunden remote gemessen.
+Wohingegen schon bessere Laufzeiten aufgrund der ersten Optimierung am Code durch das Bündeln der Statements in einzelne Batches erreicht werden konnte.
+Dennoch konnte man keine Konsistenz in den Messwerten bei den Batches sehen, woraufhin wir eine andere Optimierungsmöglichkeit in Betracht gezogen haben.
+Diese wäre das asynchrone Ausführen von Statements in mehreren Threads.
+Durch diese Optimierung konnte eine deutliche Verbesserung der Laufzeit erzielt werden, da für n = 10 (1.000.000 Tupel in Accounts) nur eine Laufzeit von 32 Sekunden gemessen wurde.
+Bei den Optimierung der Datenbankmanagementsystem-Konfigurationen konnten keine signifikanten Verbesserungen für ein performanteres DBMS erreicht werden.
+Dementgegen wurden eher Verschlechterungen der Laufzeit gemessen.
