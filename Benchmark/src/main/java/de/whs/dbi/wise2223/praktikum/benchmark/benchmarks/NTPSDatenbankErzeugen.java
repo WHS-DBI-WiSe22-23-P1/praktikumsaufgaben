@@ -13,8 +13,7 @@ public class NTPSDatenbankErzeugen {
 
     static final Random RANDOM = new Random();
 
-    private NTPSDatenbankErzeugen() {
-    }
+    private NTPSDatenbankErzeugen() {}
 
     public static void insertAccounts(int n) throws SQLException {
         final int count = n * 100_000;
@@ -53,8 +52,6 @@ public class NTPSDatenbankErzeugen {
 
     public static void insertTellers(int n) throws SQLException {
         withConnection(connection -> takeTime("Gesamt ohne Connection - " + (n * 10) + " Tupel", () -> {
-            insertAccountsAsync(10, n, 0, connection);
-
             for (int i = 0; i < n * 10; i++) {
                 int randomBranchId = RANDOM.nextInt(n);
 
@@ -69,7 +66,7 @@ public class NTPSDatenbankErzeugen {
     }
 
     private static CompletableFuture<Boolean> insertAccountsAsync(final int count, final int n, final int firstIndex, final Connection connection) {
-            return CompletableFuture.supplyAsync(() -> {
+        return CompletableFuture.supplyAsync(() -> {
                 final String[] tupels = new String[count];
                 for (int i = 0; i < count; i++) {
 
