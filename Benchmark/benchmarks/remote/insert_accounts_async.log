@@ -1,0 +1,4 @@
+3 Sekunden 221 Millisekunden for Gesamt ohne Connection mit 100000 Tupeln
+32 Sekunden 208 Millisekunden for Gesamt ohne Connection mit 1000000 Tupeln
+61 Sekunden 102 Millisekunden for Gesamt ohne Connection mit 2000000 Tupeln
+195 Sekunden 84 Millisekunden for Gesamt ohne Connection mit 5000000 Tupeln
