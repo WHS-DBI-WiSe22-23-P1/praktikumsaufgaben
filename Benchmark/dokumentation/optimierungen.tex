@@ -1,4 +1,4 @@
-Um die ausführung der Statements zu beschleunigen, gibt es zwei Möglichkeiten: Performanteren Code oder eine Performanteres DBMS~. Im Folgenden sind zu beiden Möglichkeiten unsere Ansätze aufgeführt.
+Um die Ausführung der Statements zu beschleunigen, gibt es zwei Möglichkeiten: Performanteren Code oder eine Performanteres DBMS~. Im Folgenden sind zu beiden Möglichkeiten unsere Ansätze aufgeführt.
 
 \subsection{Code}\label{subsec:code}
 Schauen wir uns die 4 Methoden an, das Erstellen der Datenbanken, das Einfügen der Branches, das Einfügen der Accounts und das Einfügen der Automaten, so fällt schnell auf, dass keine der anderen Operationen einen signifikanten Zeitaufwand im Verhältnis zum Einfügen der Accounts benötigt.
@@ -98,16 +98,16 @@ Für n=1, also 100\_000 Tupel, sind die Messungen mit einer Logarithmischen Skal
     \caption{Messungen bei unterteilung in verschieden viele Statements}
     \label{fig:merged-statements-graph}
 \end{figure}
-Schauen wir uns zunächst die Variante mit den vereinten INSERT Statements an, so fällt uns auf, dass die Messwerte annähernd auf der logarithmischen annäherung liegen.
+Schauen wir uns zunächst die Variante mit den vereinten INSERT Statements an, so fällt uns auf, dass die Messwerte annähernd auf der logarithmischen Annäherung liegen.
 Desto weniger Statements, desto schneller ist das Programm.
 Im Vergleich dazu ist bei den Batches keine Konsistenz in den Messwerten zu erkennen.
-Da jede Messung über 20 Minuten gedauert hat verzichten wir auf eine erneute Messung und schließen, dass beim Batching lediglich ein kleiner vorteil, unabhängig der anzahl der Batches, entsteht.
+Da jede Messung über 20 Minuten gedauert hat, verzichten wir auf eine erneute Messung und schließen, dass beim Batching lediglich ein kleiner Vorteil, unabhängig der Anzahl der Batches, entsteht.
 Es sind also die Commits, die Zeit benötigen.
-Deaktivieren wir Autocommit so läuft auch die variante mit Batching deutlich schneller, auch wenn sie dennoch nicht mit den einzelnen Statements mithalten kann.
+Deaktivieren wir AutoCommit so läuft auch die Variante mit Batching deutlich schneller, auch wenn sie dennoch nicht mit den einzelnen Statements mithalten kann.
 In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen Tupeln festlegen.
 
 
-\paragraph{Da} wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.
+\paragraph{Da wir nun die Methodik kennen wollen wir uns ans Multithreading wagen.}
 \begin{figure}[h!]
     \center
     \begin{tikzpicture}[baseline]
@@ -175,10 +175,12 @@ In diesem spezifischen Fall wollen wir uns also auf INSERT Statements mit vielen
     \caption{Messungen bei asynchroner Implementierung}
     \label{fig:async-graph}
 \end{figure}
-Abbildung~\ref{fig:async-graph} zeigt uns, dass die Asynchrone Implementierung linear skaliert.
+Abbildung~\ref{fig:async-graph} zeigt uns, dass die asynchrone Implementierung linear skaliert.
 In dieser Implementierung werden 10 Threads verwendet.
-Damit haben wir, mit $\sim\Theta(n)$, eine gute Laufzeitkomplexität erreicht sowie im Vergleich mit anderen Messungen aus dem Benchmark Portal auch eine gute absolute Laufzeit.
+Damit haben wir, mit $\sim\Theta(n)$, eine gute Laufzeitkomplexität erreicht, sowie im Vergleich mit anderen Messungen aus dem Benchmark Portal auch eine gute absolute Laufzeit.
 Deshalb beenden wir an dieser Stelle unsere Optimierungsversuche.
 
 
 \subsection{DBMS}\label{subsec:dbms}
+Außerdem werden weiter Optimierungsmöglichkeiten in Bezug auf das Datenbankmanagementsystem durchgeführt, um ein performanteres DBMS zu erreichen.
+Dabei wurden verschiedene Konfigurationsänderungen durchgeführt, die nachfolgend genau beschrieben werden.
