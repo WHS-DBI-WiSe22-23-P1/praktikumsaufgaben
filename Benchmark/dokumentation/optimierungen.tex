@@ -183,4 +183,20 @@ Deshalb beenden wir an dieser Stelle unsere Optimierungsversuche.
 
 \subsection{DBMS}\label{subsec:dbms}
 Außerdem werden weiter Optimierungsmöglichkeiten in Bezug auf das Datenbankmanagementsystem durchgeführt, um ein performanteres DBMS zu erreichen.
-Dabei wurden verschiedene Konfigurationsänderungen durchgeführt, die nachfolgend genau beschrieben werden.
+Dabei wurden verschiedene Konfigurationsänderungen durchgeführt, die nachfolgend genau beschrieben werden.\\
+\\
+MySQL allokiert Buffer und Caches, um die Leistung der Datenbankoperationen zu erhöhen.
+Standardgemäß sind 512MB RAM für ein MySQL Server auf einer virtuellen Maschine zugewiesen.
+Man kann die Leistung also erhöhen, indem man bestimmte Systemvariablen, die in Verbindung zu Buffer und Caches stehen, mehr Speicher zuweist.\\
+\\
+MySQL verwendet ein externes Speichersubsystem (Engine) namens InnoDB, dass die Schnittstelle zwischen dem DBMS und den Informationen darstellt.
+InnoDB allokiert den gesamten Speicher beim Serverstart und verwendet dafür die malloc()-Operation.\\
+\\
+Die „innodb\_buffer\_pool\_size“-Variable steht für die buffer pool size und typischerweise sind 50\-70\% des Arbeitsspeichers dafür zugewiesen.
+Hier werden Tabellen und Indexe gespeichert.
+Zu Optimierungszwecken wurde die Eingabepufferung in der my.ini Datei geändert und geschaut, ob es einen merkbaren Unterschied macht.
+Als erstes wurde die „innodb\_buffer\_pool\_size“ von 128MB, auf 2GB geändert und „innodb\_buffer\_log\_file\_size“ von 48MB auf 1GB, da es in der Beschreibung empfohlen worden ist, 25\%\-100\% des „buffer\_pool\_sizes“ zu reservieren.
+Dementsprechend wurde 2GB aufgrund eines Forum Beitrags gewählt und erst später gemerkt, dass dadurch der gesamte Arbeitsspeicher der VM zugewiesen wurde.
+Weshalb die Leistung des DMBS merkbar gesunken ist.
+Daraufhin wurde 1GB für die Variable „innodb\_buffer\_pool\_size“ und 500MB für „innodb\_buffer\_log\_file\_size“ reserviert.
+Diesmal konnte auch kein Leistungsverlust festgestellt werden, jedoch hat es auch zu keiner Verbesserung beigetragen.~\autocite{orcale-2022}~\autocite{stackexchange-2012}
