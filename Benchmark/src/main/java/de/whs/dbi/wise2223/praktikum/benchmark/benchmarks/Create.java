@@ -23,6 +23,8 @@ public class Create implements Benchmark {
                     takeTime(query, () -> connection.createStatement().execute(query));
                 }
             });
+
+            return null;
         }));
     }
 }
