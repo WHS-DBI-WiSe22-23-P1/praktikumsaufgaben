@@ -1,0 +1,139 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+\usepackage{csquotes}
+\usepackage{hyphenat}
+\usepackage{textcmds}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{authblk}
+
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\usepackage{graphicx}
+\usepackage{chngpage}
+\usepackage{calc}
+
+\renewcommand{\lstlistingname}{Code}
+\renewcommand{\lstlistlistingname}{Codeverzeichnis}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=blue,
+    urlcolor=blue,
+    pdftitle={DBI Aufgabenblatt 4},
+    pdfauthor={Nik Benson},
+    pdfpagemode=FullScreen,
+}
+\urlstyle{same}
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{csvsimple}
+
+\usepgfplotslibrary{units}
+
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{c}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=c}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\title{Praktikumsaufgabe 8 / 9 \\
+\large Benchmark Datenbank - MySQL}
+\author[1]{Christopher Nattefort}
+\affil[1]{christopher.nattefort@studmail.w-hs.de}
+\author[2]{Istvan Kovacs}
+\affil[2]{istvan.kovacs@studmail.w-hs.de}
+\author[3]{Luis Honderboom}
+\affil[3]{luis.honderboom@studmail.w-hs.de}
+\author[4]{Nik Benson}
+\affil[4]{nik.benson@studmail.w-hs.de}
+
+
+\usepackage[backend=biber,style=iso-authoryear]{biblatex}
+\bibliography{sheet4}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \include{title}
+
+    \pagenumbering{Roman}
+    \setcounter{page}{2}
+    \addcontentsline{toc}{section}{Inhaltsverzeichnis}
+    \tableofcontents
+    \newpage
+    \addcontentsline{toc}{section}{Abbildungsverzeichnis}
+    \listoffigures
+    \addcontentsline{toc}{section}{Tabellenverzeichnis}
+    \listoftables
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{Einleitung}\label{sec:einleitung}
+        \input{einleitung}
+
+    \newpage
+
+    \section{Last1: Benchmark für 5 remote Load Driver}\label{sec:benchmark-5-remote-load-driver}
+        \input{benchmark-5-remote-load-driver}
+
+    \section{Last2: Benchmark für 5+5 remote Load Driver}\label{sec:benchmark-5-5-remote-load-driver}
+        \input{benchmark-5-5-remote-load-driver}
+
+    \section{Last3: Benchmark für 5+5+5 remote Load Driver}\label{sec:benchmark-5-5-5-remote-load-driver}
+        \input{benchmark-5-5-5-remote-load-driver}
+
+    \newpage
+
+    \section{Optimierungen}\label{sec:optimierungen}
+        \input{optimierungen}
+
+    \newpage
+
+    \section{Fazit}\label{sec:fazit}
+        \input{fazit}
+
+    \newpage
+    \pagenumbering{roman}
+    \printbibliography
+
+    \section{Anhang}\label{sec:anhang}
+        \input{anhang}
+\end{document}
