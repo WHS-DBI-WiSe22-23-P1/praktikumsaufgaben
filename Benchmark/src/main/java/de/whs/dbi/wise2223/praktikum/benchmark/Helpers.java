@@ -19,6 +19,14 @@ public class Helpers {
         return () -> withInput(input -> benchmark.run(input.nextInt()));
     }
 
+    public static <T> T withIntInputResult(BenchmarkWithIntInputResult<T> benchmark) {
+        try {
+            return withInputResult(input -> benchmark.run(input.nextInt()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void withInput(InputFunction action) throws Exception {
         if(scanner != null) {
             action.call(scanner);
@@ -29,6 +37,18 @@ public class Helpers {
         action.call(scanner);
         scanner.close();
         scanner = null;
+    }
+
+    public static <T> T withInputResult(InputFunctionResult<T> action) throws Exception {
+        if(scanner != null)
+            return action.call(scanner);
+
+        scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        T result = action.call(scanner);
+        scanner.close();
+        scanner = null;
+
+        return result;
     }
 
     public static void takeTime(String name, TimedFunction action) throws SQLException {
@@ -42,7 +62,7 @@ public class Helpers {
     }
 
     public static <T> T withConnection(ConnectionFunction<T> action) throws SQLException {
-        Connection connection = DriverManager.getConnection(URL_REMOTE, USER, PASSWORD);
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         final T res = action.call(connection);
         connection.close();
 
@@ -53,8 +73,16 @@ public class Helpers {
         void run(int input) throws Exception;
     }
 
+    public interface BenchmarkWithIntInputResult<T> {
+        T run(int input) throws Exception;
+    }
+
     public interface InputFunction {
         void call(Scanner input) throws Exception;
+    }
+
+    public interface InputFunctionResult<T> {
+        T call(Scanner input) throws Exception;
     }
 
     public interface TimedFunction {
