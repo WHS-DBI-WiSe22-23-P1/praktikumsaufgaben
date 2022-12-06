@@ -9,16 +9,17 @@ import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.withConnection;
 
 public class NTPSDatenbankTransaktion {
 
-    public int getBalanceFromAccount(int accId) throws SQLException {
+    public static int getBalanceFromAccount(int accId) throws SQLException {
         return withConnection(connection -> {
             String statement = "SELECT balance FROM accounts WHERE accid = ? LIMIT 1";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(accId, 0);
+            preparedStatement.setInt(1, accId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            //todo - exception
-            int accountBalance = resultSet.getInt(1);
+            int accountBalance = -1;
+            if(resultSet.next())
+               accountBalance = resultSet.getInt(1);
 
             resultSet.close();
             preparedStatement.close();
@@ -27,23 +28,19 @@ public class NTPSDatenbankTransaktion {
         });
     }
 
-    public int updateBalance(int accId, int tellerId, int branchId, int delta) throws SQLException {
+    public static int updateBalance(int accId, int tellerId, int branchId, int delta, String comment) throws SQLException {
         return withConnection(connection -> {
-            int updatedAccountBalance = updateValueTupel(connection, "accounts", "balance", "accid", accId, delta);
-            updateValueTupel(connection, "branches", "balance", "branchid", branchId, delta);
-            updateValueTupel(connection, "tellers", "balance", "tellerid", tellerId, delta);
+            int updatedAccountBalance = updateValueTupel(connection, "accid", "balance","accounts", accId, delta);
+            updateValueTupel(connection, "branchid","balance", "branches", branchId, delta);
+            updateValueTupel(connection, "tellerid", "balance","tellers", tellerId, delta);
 
-            String historyComment = "------------------------------";
-            String query = "INSERT INTO history (accid, tellerid, delta, branchid, accbalance, comment) VALUES %d %d %d %d %d %s;".
-                    formatted(accId, tellerId, delta, branchId, updatedAccountBalance, historyComment);
-
-            connection.createStatement().execute(query);
+            NTPSDatenbankErzeugen.insertHistory(accId, tellerId, branchId, delta, updatedAccountBalance, comment);
 
             return updatedAccountBalance;
         });
     }
 
-    public int getNumberOfDeltaBalance(int delta) throws SQLException {
+    public static int getNumberOfDeltaBalance(int delta) throws SQLException {
         return withConnection(connection -> {
             String query = "SELECT COUNT(*) FROM history WHERE accbalance = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -51,8 +48,9 @@ public class NTPSDatenbankTransaktion {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            //todo - exception
-            int numberOfDeltaBalances = resultSet.getInt(1);
+            int numberOfDeltaBalances = -1;
+            if(resultSet.next())
+                numberOfDeltaBalances = resultSet.getInt(1);
 
             resultSet.close();
             preparedStatement.close();
@@ -61,21 +59,27 @@ public class NTPSDatenbankTransaktion {
         });
     }
 
-    private int updateValueTupel(Connection connection, String tableName, String updatingValueName, String valueName, int value, int updatingValueDelta) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT ? FROM ? WHERE ? = ?");
-        preparedStatement.setString(1, updatingValueName);
-        preparedStatement.setString(2, tableName);
-        preparedStatement.setString(3, valueName);
-        preparedStatement.setInt(4, value);
+    //todo - acid eigenschaften
+    private static int updateValueTupel(Connection connection, String primaryKeyName, String updatingValueName, String tableName, int primaryKeyValue, int updatingValueDelta) throws SQLException {
+        String selectQuery = "SELECT %s FROM %s WHERE %s = ?".formatted(updatingValueName, tableName, primaryKeyName);
+        PreparedStatement selectStatement = connection.prepareStatement(selectQuery);
+        selectStatement.setInt(1, primaryKeyValue);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+        ResultSet selectResultSet = selectStatement.executeQuery();
+        if(!selectResultSet.next())
+            return -1;
 
-        //todo - acid eigenschaften? / exception
-        int currentValue = resultSet.getInt(1);
-        resultSet.updateInt(0, currentValue + updatingValueDelta);
+        int currentValue = selectResultSet.getInt(1);
 
-        resultSet.close();
-        preparedStatement.close();
+        selectResultSet.close();
+        selectStatement.close();
+
+        String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?".formatted(tableName, updatingValueName, primaryKeyName);
+        PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+        updateStatement.setInt(1, currentValue + updatingValueDelta);
+        updateStatement.setInt(2, primaryKeyValue);
+        updateStatement.executeUpdate();
+        updateStatement.close();
 
         return currentValue + updatingValueDelta;
     }
