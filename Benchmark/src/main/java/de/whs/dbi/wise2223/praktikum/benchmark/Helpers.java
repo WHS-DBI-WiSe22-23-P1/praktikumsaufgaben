@@ -41,10 +41,12 @@ public class Helpers {
         System.out.printf("%d Sekunden %d Millisekunden for %s%n", duration.getSeconds(), duration.getNano() / 1_000_000, name);
     }
 
-    public static void withConnection(ConnectionFunction action) throws SQLException {
-        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        action.call(connection);
+    public static <T> T withConnection(ConnectionFunction<T> action) throws SQLException {
+        Connection connection = DriverManager.getConnection(URL_REMOTE, USER, PASSWORD);
+        final T res = action.call(connection);
         connection.close();
+
+        return res;
     }
 
     public interface BenchmarkWithIntInput {
@@ -59,7 +61,7 @@ public class Helpers {
         void call() throws SQLException;
     }
 
-    public interface ConnectionFunction {
-        void call(Connection connection) throws SQLException;
+    public interface ConnectionFunction<T> {
+        T call(Connection connection) throws SQLException;
     }
 }
