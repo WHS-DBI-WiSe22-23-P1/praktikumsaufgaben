@@ -64,7 +64,7 @@ public class LoadDriver {
     }
 
     private void printResult() {
-        System.out.printf("Transactions run: %d%n Transactions per second: %f%n", transactionsRun, transactionsRun / measurePhaseTime.toSeconds());
+        System.out.printf("Transactions run: %d%n Transactions per second: %d%n", transactionsRun, transactionsRun / measurePhaseTime.toSeconds());
     }
 
     private void updatePhase() {
@@ -122,6 +122,15 @@ public class LoadDriver {
             defaults.put(WARMUP, Duration.ofMinutes(4));
             defaults.put(MEASURE, Duration.ofMinutes(5));
             defaults.put(TEARDOWN, Duration.ofMinutes(1));
+
+            return defaults;
+        }
+
+        public static @NotNull Map<Phases, Duration> test() {
+            final Map<Phases, Duration> defaults = new EnumMap<>(Phases.class);
+            defaults.put(WARMUP, Duration.ofMinutes(4/3));
+            defaults.put(MEASURE, Duration.ofMinutes(5/3));
+            defaults.put(TEARDOWN, Duration.ofMinutes(1/3));
 
             return defaults;
         }
