@@ -62,7 +62,7 @@ public class Helpers {
     }
 
     public static <T> T withConnection(ConnectionFunction<T> action) throws SQLException {
-        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        Connection connection = DriverManager.getConnection(URL_REMOTE, USER, PASSWORD);
         final T res = action.call(connection);
         connection.close();
 

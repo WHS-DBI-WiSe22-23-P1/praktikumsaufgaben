@@ -75,10 +75,10 @@ public class LoadDriver {
     }
 
     private void printResult() {
-        System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
+        System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!%n", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
         for(final String transactionName : stats.keySet()) {
             final Pair<Integer, Duration> myStats = stats.get(transactionName);
-            System.out.printf("Run %d %s in %d seconds, that is %d transactions per second!", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
+            System.out.printf("\tRun %d %s in %d seconds, that is %d transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
         }
     }
 
