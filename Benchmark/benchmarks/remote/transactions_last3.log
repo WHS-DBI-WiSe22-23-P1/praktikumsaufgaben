@@ -1,7 +1,92 @@
-Run 3245 transactions in 300 seconds, that is 10 transactions per second!Run 1136 Kontostands TX in 7 seconds, that is 162 transactions per second!Run 502 Analyse TX in 15 seconds, that is 33 transactions per second!Run 1607 Einzahlungs TX in 88 seconds, that is 18 transactions per second!Run 3225 transactions in 300 seconds, that is 10 transactions per second!Run 1122 Kontostands TX in 6 seconds, that is 187 transactions per second!Run 500 Analyse TX in 15 seconds, that is 33 transactions per second!Run 1603 Einzahlungs TX in 90 seconds, that is 17 transactions per second!Run 3246 transactions in 300 seconds, that is 10 transactions per second!Run 1149 Kontostands TX in 7 seconds, that is 164 transactions per second!Run 504 Analyse TX in 15 seconds, that is 33 transactions per second!Run 1593 Einzahlungs TX in 89 seconds, that is 17 transactions per second!Run 3247 transactions in 300 seconds, that is 10 transactions per second!Run 1167 Kontostands TX in 7 seconds, that is 166 transactions per second!Run 480 Analyse TX in 14 seconds, that is 34 transactions per second!Run 1600 Einzahlungs TX in 89 seconds, that is 17 transactions per second!Run 3241 transactions in 300 seconds, that is 10 transactions per second!Run 1154 Kontostands TX in 6 seconds, that is 192 transactions per second!Run 521 Analyse TX in 16 seconds, that is 32 transactions per second!Run 1566 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
+cn
+-------------------------------------
+Run 3245 transactions in 300 seconds, that is 10 transactions per second!
+Run 3225 transactions in 300 seconds, that is 10 transactions per second!
+Run 3246 transactions in 300 seconds, that is 10 transactions per second!
+Run 3247 transactions in 300 seconds, that is 10 transactions per second!
+Run 3241 transactions in 300 seconds, that is 10 transactions per second!
+
+Run 1136 Kontostands TX in 7 seconds, that is 162 transactions per second!
+Run 1122 Kontostands TX in 6 seconds, that is 187 transactions per second!
+Run 1149 Kontostands TX in 7 seconds, that is 164 transactions per second!
+Run 1167 Kontostands TX in 7 seconds, that is 166 transactions per second!
+Run 1154 Kontostands TX in 6 seconds, that is 192 transactions per second!
+
+Run 502 Analyse TX in 15 seconds, that is 33 transactions per second!
+Run 500 Analyse TX in 15 seconds, that is 33 transactions per second!
+Run 504 Analyse TX in 15 seconds, that is 33 transactions per second!
+Run 480 Analyse TX in 14 seconds, that is 34 transactions per second!
+Run 521 Analyse TX in 16 seconds, that is 32 transactions per second!
+
+Run 1607 Einzahlungs TX in 88 seconds, that is 18 transactions per second!
+Run 1603 Einzahlungs TX in 90 seconds, that is 17 transactions per second!
+Run 1593 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
+Run 1600 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
+Run 1566 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
+=====================================
+Totat transactions: 3.240,8 / per second: 10
+Kontostands-TXs per second: 174,2
+Analyse-TXs per second: 33
+Einzahlungs-TXs per second: 17
 
 lh
-Run 3251 transactions in 300 seconds, that is 10 transactions per second!Run 1108 Kontostands TX in 5 seconds, that is 221 transactions per second!Run 471 Analyse TX in 14 seconds, that is 33 transactions per second!Run 1672 Einzahlungs TX in 88 seconds, that is 19 transactions per second!Run 3304 transactions in 300 seconds, that is 11 transactions per second!Run 1162 Kontostands TX in 6 seconds, that is 193 transactions per second!Run 518 Analyse TX in 15 seconds, that is 34 transactions per second!Run 1624 Einzahlungs TX in 84 seconds, that is 19 transactions per second!Run 3279 transactions in 300 seconds, that is 10 transactions per second!Run 1112 Kontostands TX in 6 seconds, that is 185 transactions per second!Run 551 Analyse TX in 17 seconds, that is 32 transactions per second!Run 1616 Einzahlungs TX in 84 seconds, that is 19 transactions per second!Run 3297 transactions in 300 seconds, that is 10 transactions per second!Run 1190 Kontostands TX in 6 seconds, that is 198 transactions per second!Run 511 Analyse TX in 15 seconds, that is 34 transactions per second!Run 1596 Einzahlungs TX in 84 seconds, that is 19 transactions per second!Run 3285 transactions in 300 seconds, that is 10 transactions per second!Run 1186 Kontostands TX in 6 seconds, that is 197 transactions per second!Run 457 Analyse TX in 14 seconds, that is 32 transactions per second!Run 1642 Einzahlungs TX in 86 seconds, that is 19 transactions per second!
+-------------------------------------
+Run 3251 transactions in 300 seconds, that is 10 transactions per second!
+Run 3304 transactions in 300 seconds, that is 11 transactions per second!
+Run 3279 transactions in 300 seconds, that is 10 transactions per second!
+Run 3297 transactions in 300 seconds, that is 10 transactions per second!
+Run 3285 transactions in 300 seconds, that is 10 transactions per second!
+
+Run 1108 Kontostands TX in 5 seconds, that is 221 transactions per second!
+Run 1162 Kontostands TX in 6 seconds, that is 193 transactions per second!
+Run 1112 Kontostands TX in 6 seconds, that is 185 transactions per second!
+Run 1190 Kontostands TX in 6 seconds, that is 198 transactions per second!
+Run 1186 Kontostands TX in 6 seconds, that is 197 transactions per second!
+
+Run 471 Analyse TX in 14 seconds, that is 33 transactions per second!
+Run 518 Analyse TX in 15 seconds, that is 34 transactions per second!
+Run 551 Analyse TX in 17 seconds, that is 32 transactions per second!
+Run 511 Analyse TX in 15 seconds, that is 34 transactions per second!
+Run 457 Analyse TX in 14 seconds, that is 32 transactions per second!
+
+Run 1672 Einzahlungs TX in 88 seconds, that is 19 transactions per second!
+Run 1624 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+Run 1616 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+Run 1596 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+Run 1642 Einzahlungs TX in 86 seconds, that is 19 transactions per second!
+=====================================
+Totat transactions: 3.283,2 / per second: 10
+Kontostands-TXs per second: 205,4
+Analyse-TXs per second: 33
+Einzahlungs-TXs per second: 19
 
 nb
-Run 3334 transactions in 300 seconds, that is 11 transactions per second!Run 1202 Kontostands TX in 6 seconds, that is 200 transactions per second!Run 487 Analyse TX in 15 seconds, that is 32 transactions per second!Run 1645 Einzahlungs TX in 82 seconds, that is 20 transactions per second!Run 3315 transactions in 300 seconds, that is 11 transactions per second!Run 1158 Kontostands TX in 6 seconds, that is 193 transactions per second!Run 488 Analyse TX in 14 seconds, that is 34 transactions per second!Run 1669 Einzahlungs TX in 84 seconds, that is 19 transactions per second!Run 3333 transactions in 300 seconds, that is 11 transactions per second!Run 1130 Kontostands TX in 6 seconds, that is 188 transactions per second!Run 532 Analyse TX in 16 seconds, that is 33 transactions per second!Run 1671 Einzahlungs TX in 81 seconds, that is 20 transactions per second!Run 3333 transactions in 300 seconds, that is 11 transactions per second!Run 1181 Kontostands TX in 5 seconds, that is 236 transactions per second!Run 495 Analyse TX in 15 seconds, that is 33 transactions per second!Run 1657 Einzahlungs TX in 82 seconds, that is 20 transactions per second!Run 3307 transactions in 300 seconds, that is 11 transactions per second!Run 1164 Kontostands TX in 6 seconds, that is 194 transactions per second!Run 466 Analyse TX in 14 seconds, that is 33 transactions per second!Run 1677 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+-------------------------------------
+Run 3334 transactions in 300 seconds, that is 11 transactions per second!
+Run 3315 transactions in 300 seconds, that is 11 transactions per second!
+Run 3333 transactions in 300 seconds, that is 11 transactions per second!
+Run 3333 transactions in 300 seconds, that is 11 transactions per second!
+Run 3307 transactions in 300 seconds, that is 11 transactions per second!
+
+Run 1202 Kontostands TX in 6 seconds, that is 200 transactions per second!
+Run 1158 Kontostands TX in 6 seconds, that is 193 transactions per second!
+Run 1130 Kontostands TX in 6 seconds, that is 188 transactions per second!
+Run 1181 Kontostands TX in 5 seconds, that is 236 transactions per second!
+Run 1164 Kontostands TX in 6 seconds, that is 194 transactions per second!
+
+Run 487 Analyse TX in 15 seconds, that is 32 transactions per second!
+Run 488 Analyse TX in 14 seconds, that is 34 transactions per second!
+Run 532 Analyse TX in 16 seconds, that is 33 transactions per second!
+Run 495 Analyse TX in 15 seconds, that is 33 transactions per second!
+Run 466 Analyse TX in 14 seconds, that is 33 transactions per second!
+
+Run 1645 Einzahlungs TX in 82 seconds, that is 20 transactions per second!
+Run 1669 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+Run 1671 Einzahlungs TX in 81 seconds, that is 20 transactions per second!
+Run 1657 Einzahlungs TX in 82 seconds, that is 20 transactions per second!
+Run 1677 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
+=====================================
+Totat transactions: 3.324,4 / per second:
+Kontostands-TXs per second: 202,2
+Analyse-TXs per second: 33
+Einzahlungs-TXs per second: 19,4
