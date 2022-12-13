@@ -29,17 +29,24 @@ public class LoadDriver {
         this.phases = phases;
     }
 
-    public static void main(String[] args) throws SQLException {
-        withConnection(connection -> {
-            RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
-            try {
-                new LoadDriver(Duration.ofMillis(50), new Pair[]{new Pair<Double, Runnable>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount),
-                        new Pair<Double, Runnable>(50.0, ntpsDatenbankTransaktion::updateBalance), new Pair<Double, Runnable>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance)}, Phases.defaults()).drive();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return null;
-        });
+    public static void main(String[] args) {
+        for(int i = 0; i < 5; i++)
+            new Thread(() -> {
+                try {
+                    withConnection(connection -> {
+                        RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
+                        try {
+                            new LoadDriver(Duration.ofMillis(50), new Pair[]{new Pair<Double, Runnable>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount),
+                                    new Pair<Double, Runnable>(50.0, ntpsDatenbankTransaktion::updateBalance), new Pair<Double, Runnable>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance)}, Phases.defaults()).drive();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        return null;
+                    });
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
 
     }
 
