@@ -57,7 +57,7 @@ public class LoadDriver {
             runRandomTransaction();
             if (phase == Phases.MEASURE) transactionsRun++;
 
-            wait(thinkTime.toMillis());
+            Thread.sleep(thinkTime.toMillis());
         } while (phase != null);
 
         printResult();
@@ -68,8 +68,15 @@ public class LoadDriver {
     }
 
     private void updatePhase() {
+        if(phase == null) {
+            phase = Phases.after(null);
+            phaseStartedAt = LocalDateTime.now();
+
+            return;
+        }
+
         final Duration phaseLength = Duration.between(phaseStartedAt, LocalDateTime.now()).abs();
-        if (phase == null || phases.get(phase).compareTo(phaseLength) > 0) {
+        if (phases.get(phase).compareTo(phaseLength) < 0) {
             if (phase == Phases.MEASURE) measurePhaseTime = phaseLength;
 
             phase = Phases.after(phase);
