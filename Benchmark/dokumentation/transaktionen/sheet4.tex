@@ -75,15 +75,16 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-\title{Aufgabenblatt 4}
+\title{Praktikumsaufgabe 8 / 9 \\
+\large Benchmark Datenbank - MySQL}
 \author[1]{Christopher Nattefort}
-\affil[1]{202122203}
+\affil[1]{christopher.nattefort@studmail.w-hs.de}
 \author[2]{Istvan Kovacs}
-\affil[2]{202122008}
+\affil[2]{istvan.kovacs@studmail.w-hs.de}
 \author[3]{Luis Honderboom}
-\affil[3]{202120389}
+\affil[3]{luis.honderboom@studmail.w-hs.de}
 \author[4]{Nik Benson}
-\affil[4]{202123513}
+\affil[4]{nik.benson@studmail.w-hs.de}
 
 
 \usepackage[backend=biber,style=iso-authoryear]{biblatex}
@@ -94,42 +95,45 @@
     \include{title}
 
     \pagenumbering{Roman}
+    \setcounter{page}{2}
     \addcontentsline{toc}{section}{Inhaltsverzeichnis}
     \tableofcontents
     \newpage
     \addcontentsline{toc}{section}{Abbildungsverzeichnis}
     \listoffigures
-    \addcontentsline{toc}{section}{Tabellenvrzeichnis}
+    \addcontentsline{toc}{section}{Tabellenverzeichnis}
     \listoftables
     \newpage
     \pagenumbering{arabic}
 
+    \section{Einleitung}\label{sec:einleitung}
+        \input{einleitung}
 
-    \section{Vorwort}\label{sec:vorwort}
-        \input{vorwort}
+    \newpage
 
+    \section{Last1: Benchmark für 5 remote Load Driver}\label{sec:benchmark-5-remote-load-driver}
+        \input{benchmark-5-remote-load-driver}
 
-    \section{Größenschätzung}\label{sec:groenschatzung}
-        \input{größenschätzung}
+    \section{Last2: Benchmark für 5+5 remote Load Driver}\label{sec:benchmark-5-5-remote-load-driver}
+        \input{benchmark-5-5-remote-load-driver}
 
+    \section{Last3: Benchmark für 5+5+5 remote Load Driver}\label{sec:benchmark-5-5-5-remote-load-driver}
+        \input{benchmark-5-5-5-remote-load-driver}
 
-    \section{Bestimmung des benötigten Speicherplatzes}\label{sec:bestimmung-des-benotigten-speicherplatzes}
-        \input{bestimmung-des-benoetigten-speicherplatzes.tex}
-
-
-    \section{Messungen}\label{sec:messungen}
-        \input{messungen}
-
+    \newpage
 
     \section{Optimierungen}\label{sec:optimierungen}
         \input{optimierungen}
 
+    \newpage
 
     \section{Fazit}\label{sec:fazit}
         \input{fazit}
 
-        \newpage
-        \pagenumbering{roman}
-        \printbibliography
+    \newpage
+    \pagenumbering{roman}
+    \printbibliography
 
+    \section{Anhang}\label{sec:anhang}
+        \input{anhang}
 \end{document}
