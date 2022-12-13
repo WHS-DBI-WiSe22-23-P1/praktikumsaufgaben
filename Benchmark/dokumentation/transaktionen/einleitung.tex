@@ -2,7 +2,7 @@
 Die vorgegebene Aufgabenstellung 8/9 im Praktikum von Datenbanken und Informationssysteme sieht eine Erstellung und Optimierung eines Java Programms, sowie eines Datenbankmanagementsystem vor.
 Hierbei wurde in der vorherigen Aufgabe eine MySQL-Datenbank für die Dateninitialisierung in einer n-tps-Datenbank herangezogen, in der verschiedene Relationen erstellt und anschließend mit Einträgen bzw. Tupeln gefüllt wurden.
 Bei dieser Aufgabenstellung sollen nun die erstellten Einträge mittels drei Abfragen / Lasttransaktionen (TXs) in einer 100-tps-Datenbank gelesen und verändert werden.
-Die Benchmark-Messungen der Anfragen auf das DBMS erfolgen bei unterschiedlichen Lasten mit verschiedenen Profilen, die durch ein Load-Driver-Programm durchgeführt werden, wobei es eine 4-minütige Einschwingphase, dann eine 5-minütige Messphase und am Ende eine 1-minütige Ausschwingphase gibt.
+Die Benchmark-Messungen der Anfragen auf das DBMS erfolgen bei unterschiedlichen Lasten mit verschiedenen Profilen (Last1, Last2, Last3), die durch ein Load-Driver-Programm durchgeführt werden.
 \subsection{Datenbankmanagementsystem}\label{subsec:datenbankmanagementsystem-einleitung}
 Als Datenbankmanagementsystem wird ein MySQL Server mit der Version 8.0.30 verwendet.
 Dieser läuft auf einer virtuellen Maschine, der als Server agiert und durch eine Netzwerkverbindung zum Programm Abfragen / Transaktionen erhält.
@@ -32,3 +32,10 @@ Diese sollen die bekannten ACID-Eigenschaften garantieren und werden nach einer 
     \item \textbf{Analyse-TX} \\
     Eine Methode / Abfrage zur Rückgabe der Anzahl der getätigten Einzahlugen mit genau einem Betrags (delta), der als Eingabeparameter übergeben wird.
 \end{enumerate}
+
+\subsection{Load-Driver-Programm}\label{subsec:load-driver-programm}
+Das Load-Driver-Programm dient zu Messung / Benchmark des DBMS und führt dabei 10 Minuten lang eine Schleife aus, wobei es eine 4-minütige Einschwingphase, dann eine 5-minütige Messphase und am Ende eine 1-minütige Ausschwingphase gibt.
+In der Schleife werden dann durch die relative Gewichtung der Lasttransaktionen, diese zufällig gewählt und mit zufällig gewählten, sinnvollen Parametern ausgeführt.
+Die Primary Keys oder Fremdschlüssel der Einträge (accid, branchid, tellerid) werden dabei zufällig und gleichverteilt aus den jeweiligen Bereichen gewählt.
+Die Einzahlungsbeiträge werden zufällig und ebenfalls gleichverteilt aus dem Bereich 1 bis 10.000 erzeugt.
+Außerdem soll  zwischen zwei TXs jeweils eine feste Nachdenkzeit / Pause von genau 50 ms eingehalten werden, sodass das Programm nach erfolgreicher Abarbeitung einer TX einfach wartet, bevor die nächste gestartet wird.
