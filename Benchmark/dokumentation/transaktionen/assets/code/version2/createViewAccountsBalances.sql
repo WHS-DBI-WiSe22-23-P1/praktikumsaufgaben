@@ -1,0 +1,1 @@
+CREATE VIEW accounts_balances AS SELECT accid, balance FROM accounts;

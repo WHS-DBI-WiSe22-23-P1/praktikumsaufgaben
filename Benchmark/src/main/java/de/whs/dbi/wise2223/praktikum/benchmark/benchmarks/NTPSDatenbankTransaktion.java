@@ -30,6 +30,23 @@ public class NTPSDatenbankTransaktion {
         return accountBalance;
     }
 
+    public int getBalanceFromAccountWithViews(int accId) throws SQLException {
+        String statement = "SELECT balance FROM accounts_balances WHERE accid = ? LIMIT 1";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, accId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int accountBalance = -1;
+        if(resultSet.next())
+            accountBalance = resultSet.getInt(1);
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return accountBalance;
+    }
+
     public int updateBalance(int accId, int tellerId, int branchId, int delta, String comment) throws SQLException {
         int updatedAccountBalance = updateValueTupel("accid", "balance","accounts", accId, delta);
         updateValueTupel("branchid","balance", "branches", branchId, delta);
@@ -42,6 +59,23 @@ public class NTPSDatenbankTransaktion {
 
     public int getNumberOfDeltaBalance(int delta) throws SQLException {
         String query = "SELECT COUNT(*) FROM history WHERE accbalance = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, delta);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int numberOfDeltaBalances = -1;
+        if(resultSet.next())
+            numberOfDeltaBalances = resultSet.getInt(1);
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return numberOfDeltaBalances;
+    }
+
+    public int getNumberOfDeltaBalanceWithViews(int delta) throws SQLException {
+        String query = "SELECT balance_number FROM accounts_balance_numbers WHERE accbalance = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, delta);
 
