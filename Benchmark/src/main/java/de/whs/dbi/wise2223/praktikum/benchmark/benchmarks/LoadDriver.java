@@ -4,12 +4,14 @@ import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
+import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.withConnection;
 
 public class LoadDriver {
     private static final Random random = new Random();
@@ -27,9 +29,18 @@ public class LoadDriver {
         this.phases = phases;
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(), 100);
-        new LoadDriver(Duration.ofMillis(50), new Pair[]{new Pair<Double, Runnable>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount), new Pair<Double, Runnable>(50.0, ntpsDatenbankTransaktion::updateBalance), new Pair<Double, Runnable>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance)}, Phases.defaults()).drive();
+    public static void main(String[] args) throws SQLException {
+        withConnection(connection -> {
+            RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
+            try {
+                new LoadDriver(Duration.ofMillis(50), new Pair[]{new Pair<Double, Runnable>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount),
+                        new Pair<Double, Runnable>(50.0, ntpsDatenbankTransaktion::updateBalance), new Pair<Double, Runnable>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance)}, Phases.defaults()).drive();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        });
+
     }
 
     public void drive() throws InterruptedException {

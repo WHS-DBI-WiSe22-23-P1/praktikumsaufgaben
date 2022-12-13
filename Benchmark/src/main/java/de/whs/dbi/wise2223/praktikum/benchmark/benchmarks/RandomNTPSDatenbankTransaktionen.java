@@ -30,7 +30,7 @@ public class RandomNTPSDatenbankTransaktionen {
 
     public void updateBalance() {
         try {
-            ntpsDatenbankTransaktion.updateBalance(random.nextInt(acidLimit), random.nextInt(tellersLimit), random.nextInt(branchesLimit), random.nextInt(1, DELTA_LIMIT));
+            ntpsDatenbankTransaktion.updateBalance(random.nextInt(acidLimit), random.nextInt(tellersLimit), random.nextInt(branchesLimit), random.nextInt(1, DELTA_LIMIT), "------------------------------");
         } catch (SQLException e) {
             e.printStackTrace();
         }
