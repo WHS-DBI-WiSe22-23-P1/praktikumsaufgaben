@@ -11,7 +11,7 @@ Transactions run: 3026
 Transactions run: 3031
  Transactions per second: 10
 =====================================
-Totat transactions: 3.029 / per second: 10
+Totat transactions: 15.145 / per second: 50
 
  lh
 -------------------------------------
@@ -26,4 +26,4 @@ Transactions run: 3008
 Transactions run: 3005
  Transactions per second: 10
 =====================================
-Totat transactions: 2.999,6 / per second: 9,6
+Totat transactions: 14.998 / per second: 48

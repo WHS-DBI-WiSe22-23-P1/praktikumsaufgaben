@@ -24,10 +24,10 @@ Run 1593 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
 Run 1600 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
 Run 1566 Einzahlungs TX in 89 seconds, that is 17 transactions per second!
 =====================================
-Totat transactions: 3.240,8 / per second: 10
-Kontostands-TXs per second: 174,2
-Analyse-TXs per second: 33
-Einzahlungs-TXs per second: 17
+Totat transactions: 16.204 / per second: 50
+Kontostands-TXs per second: 871
+Analyse-TXs per second: 165
+Einzahlungs-TXs per second: 86
 
 lh
 -------------------------------------
@@ -55,10 +55,10 @@ Run 1616 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
 Run 1596 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
 Run 1642 Einzahlungs TX in 86 seconds, that is 19 transactions per second!
 =====================================
-Totat transactions: 3.283,2 / per second: 10
-Kontostands-TXs per second: 205,4
-Analyse-TXs per second: 33
-Einzahlungs-TXs per second: 19
+Totat transactions: 16.416 / per second: 51
+Kontostands-TXs per second: 994
+Analyse-TXs per second: 165
+Einzahlungs-TXs per second: 95
 
 nb
 -------------------------------------
@@ -86,7 +86,7 @@ Run 1671 Einzahlungs TX in 81 seconds, that is 20 transactions per second!
 Run 1657 Einzahlungs TX in 82 seconds, that is 20 transactions per second!
 Run 1677 Einzahlungs TX in 84 seconds, that is 19 transactions per second!
 =====================================
-Totat transactions: 3.324,4 / per second:
-Kontostands-TXs per second: 202,2
-Analyse-TXs per second: 33
-Einzahlungs-TXs per second: 19,4
+Totat transactions: 16.622 / per second: 55
+Kontostands-TXs per second: 1.011
+Analyse-TXs per second: 166
+Einzahlungs-TXs per second: 98
