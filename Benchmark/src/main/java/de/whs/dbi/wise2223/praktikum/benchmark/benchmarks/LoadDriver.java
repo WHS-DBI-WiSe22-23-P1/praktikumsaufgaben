@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -32,7 +33,10 @@ public class LoadDriver {
     public static void main(String[] args) {
         final Duration thinkTime = Duration.ofMillis(50);
         final Map<Phases, Duration> phases = Phases.defaults();
-        for (int i = 0; i < 5; i++)
+
+        System.out.printf("Start LoadDriver: %s \n",  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
+
+        for(int i = 0; i < 5; i++)
             new Thread(() -> {
                 try {
                     withConnection(connection -> {
@@ -52,7 +56,6 @@ public class LoadDriver {
                     throw new RuntimeException(e);
                 }
             }).start();
-
     }
 
     public void drive() throws InterruptedException {
