@@ -3,7 +3,6 @@ package de.whs.dbi.wise2223.praktikum.benchmark;
 import de.whs.dbi.wise2223.praktikum.benchmark.benchmarks.Create;
 import de.whs.dbi.wise2223.praktikum.benchmark.benchmarks.Drop;
 import de.whs.dbi.wise2223.praktikum.benchmark.benchmarks.NTPSDatenbankErzeugen;
-import de.whs.dbi.wise2223.praktikum.benchmark.test.TransaktionTest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,6 @@ public class Main {
         put("ntps.branches", withIntInput(NTPSDatenbankErzeugen::insertBranches));
         put("ntps.accounts", withIntInput(NTPSDatenbankErzeugen::insertAccounts));
         put("ntps.tellers", withIntInput(NTPSDatenbankErzeugen::insertTellers));
-        put("ntps.transaktionTest", new TransaktionTest());
     }};
 
     public static void main(String[] args) throws Exception {
