@@ -7,37 +7,42 @@ import org.jetbrains.annotations.Nullable;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+
 import static de.whs.dbi.wise2223.praktikum.benchmark.Helpers.withConnection;
 
 public class LoadDriver {
     private static final Random random = new Random();
     private final Duration thinkTime;
-    private final Pair<Double, Runnable>[] transactions;
+    private final Map<String, Pair<Double, Runnable>> transactions;
     private final Map<Phases, Duration> phases;
     private Phases phase;
     private LocalDateTime phaseStartedAt;
     private int transactionsRun = 0;
     private Duration measurePhaseTime;
 
-    public LoadDriver(Duration thinkTime, Pair<Double, Runnable>[] transactions, Map<Phases, Duration> phases) {
+    private final Map<String, Pair<Integer, Duration>> stats = new HashMap<>();
+
+    public LoadDriver(final Duration thinkTime, final Map<String, Pair<Double, Runnable>> transactions, final Map<Phases, Duration> phases) {
         this.thinkTime = thinkTime;
         this.transactions = transactions;
         this.phases = phases;
     }
 
     public static void main(String[] args) {
-        for(int i = 0; i < 5; i++)
+        final Duration thinkTime = Duration.ofMillis(50);
+        final Map<Phases, Duration> phases = Phases.defaults();
+        for (int i = 0; i < 5; i++)
             new Thread(() -> {
                 try {
                     withConnection(connection -> {
                         RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
+                        final Map<String, Pair<Double, Runnable>> transactions = new HashMap<>();
+                        transactions.put("Kontostands TX", new Pair<>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount));
+                        transactions.put("Einzahlungs TX", new Pair<>(50.0, ntpsDatenbankTransaktion::updateBalance));
+                        transactions.put("Analyse TX", new Pair<>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance));
                         try {
-                            new LoadDriver(Duration.ofMillis(50), new Pair[]{new Pair<Double, Runnable>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount),
-                                    new Pair<Double, Runnable>(50.0, ntpsDatenbankTransaktion::updateBalance), new Pair<Double, Runnable>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance)}, Phases.defaults()).drive();
+                            new LoadDriver(thinkTime, transactions, phases).drive();
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -54,8 +59,14 @@ public class LoadDriver {
         do {
             updatePhase();
 
-            runRandomTransaction();
-            if (phase == Phases.MEASURE) transactionsRun++;
+            final LocalDateTime transactionStartetAt = LocalDateTime.now();
+            final String name = runRandomTransaction();
+            if (phase == Phases.MEASURE) {
+                Duration transactionDuration = Duration.between(transactionStartetAt, LocalDateTime.now()).abs();
+                transactionsRun++;
+                Pair<Integer, Duration> myStats = stats.getOrDefault(name, new Pair<>(0, Duration.ZERO));
+                stats.put(name, new Pair<>(myStats.getKey() + 1, myStats.getValue().plus(transactionDuration)));
+            }
 
             Thread.sleep(thinkTime.toMillis());
         } while (phase != null);
@@ -64,11 +75,15 @@ public class LoadDriver {
     }
 
     private void printResult() {
-        System.out.printf("Transactions run: %d%n Transactions per second: %d%n", transactionsRun, transactionsRun / measurePhaseTime.toSeconds());
+        System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
+        for(final String transactionName : stats.keySet()) {
+            final Pair<Integer, Duration> myStats = stats.get(transactionName);
+            System.out.printf("Run %d %s in %d seconds, that is %d transactions per second!", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
+        }
     }
 
     private void updatePhase() {
-        if(phase == null) {
+        if (phase == null) {
             phase = Phases.after(null);
             phaseStartedAt = LocalDateTime.now();
 
@@ -84,19 +99,22 @@ public class LoadDriver {
         }
     }
 
-    private void runRandomTransaction() {
-        selectRandomTransaction().run();
+    private String runRandomTransaction() {
+        Pair<String, Runnable> namedTransaction = selectRandomTransaction();
+        namedTransaction.getValue().run();
+        return namedTransaction.getKey();
     }
 
     private double getTransactionsSum() {
-        return Arrays.stream(transactions).map(transactions -> transactions.getKey()).reduce(Double::sum).orElse(0.0);
+        return transactions.values().stream().map(Pair::getKey).reduce(Double::sum).orElse(0.0);
     }
 
-    private Runnable selectRandomTransaction() {
+    private Pair<String, Runnable> selectRandomTransaction() {
         double selected = random.nextDouble(getTransactionsSum());
-        for (final Pair<Double, Runnable> transaction : transactions) {
+        for (final String transactionName : transactions.keySet()) {
+            Pair<Double, Runnable> transaction = transactions.get(transactionName);
             selected -= transaction.getKey();
-            if (selected < 0) return transaction.getValue();
+            if (selected < 0) return new Pair<>(transactionName, transaction.getValue());
         }
 
         throw new IllegalStateException("");
