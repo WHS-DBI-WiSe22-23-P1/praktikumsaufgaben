@@ -9,8 +9,18 @@ public class NTPSDatenbankTransaktion {
 
     private Connection connection;
 
+    private PreparedStatement preparedStatementEinzahlung, preparedStatementAnalyse;
+
     public NTPSDatenbankTransaktion(Connection connection) {
         this.connection = connection;
+    }
+
+    public void initialisePreparedStatements() throws SQLException {
+        String statementEinzahlung = "SELECT balance FROM accounts_balances WHERE accid = ? LIMIT 1";
+        preparedStatementEinzahlung = connection.prepareStatement(statementEinzahlung);
+
+        String statementAnalyse = "SELECT balance_number FROM accounts_balance_numbers WHERE accbalance = ?";
+        preparedStatementAnalyse = connection.prepareStatement(statementAnalyse);
     }
 
     public int getBalanceFromAccount(int accId) throws SQLException {
@@ -43,6 +53,20 @@ public class NTPSDatenbankTransaktion {
 
         resultSet.close();
         preparedStatement.close();
+
+        return accountBalance;
+    }
+
+    public int getBalanceFromAccountWithInitialisedStatement(int accId) throws SQLException {
+        preparedStatementEinzahlung.setInt(1, accId);
+
+        ResultSet resultSet = preparedStatementEinzahlung.executeQuery();
+
+        int accountBalance = -1;
+        if(resultSet.next())
+            accountBalance = resultSet.getInt(1);
+
+        resultSet.close();
 
         return accountBalance;
     }
@@ -87,6 +111,20 @@ public class NTPSDatenbankTransaktion {
 
         resultSet.close();
         preparedStatement.close();
+
+        return numberOfDeltaBalances;
+    }
+
+    public int getNumberOfDeltaBalanceWithInitialisedStatement(int delta) throws SQLException {
+        preparedStatementAnalyse.setInt(1, delta);
+
+        ResultSet resultSet = preparedStatementAnalyse.executeQuery();
+
+        int numberOfDeltaBalances = -1;
+        if(resultSet.next())
+            numberOfDeltaBalances = resultSet.getInt(1);
+
+        resultSet.close();
 
         return numberOfDeltaBalances;
     }

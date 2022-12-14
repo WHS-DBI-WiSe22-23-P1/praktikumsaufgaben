@@ -40,11 +40,15 @@ public class LoadDriver {
             new Thread(() -> {
                 try {
                     withConnection(connection -> {
-                        RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
+                        NTPSDatenbankTransaktion ntpsDatenbankTransaktion = new NTPSDatenbankTransaktion(connection);
+                        //ntpsDatenbankTransaktion.initialisePreparedStatements();
+
+                        RandomNTPSDatenbankTransaktionen randomNTPSDatenbankTransaktionen = new RandomNTPSDatenbankTransaktionen(ntpsDatenbankTransaktion, 100);
                         final Map<String, Pair<Double, Runnable>> transactions = new HashMap<>();
-                        transactions.put("Kontostands TX", new Pair<>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount));
-                        transactions.put("Einzahlungs TX", new Pair<>(50.0, ntpsDatenbankTransaktion::updateBalance));
-                        transactions.put("Analyse TX", new Pair<>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance));
+                        transactions.put("Kontostands TX", new Pair<>(35.0, randomNTPSDatenbankTransaktionen::getBalanceFromAccount));
+                        transactions.put("Einzahlungs TX", new Pair<>(50.0, randomNTPSDatenbankTransaktionen::updateBalance));
+                        transactions.put("Analyse TX", new Pair<>(15.0, randomNTPSDatenbankTransaktionen::getNumberOfDeltaBalance));
+
                         try {
                             new LoadDriver(thinkTime, transactions, phases).drive();
                         } catch (InterruptedException e) {
