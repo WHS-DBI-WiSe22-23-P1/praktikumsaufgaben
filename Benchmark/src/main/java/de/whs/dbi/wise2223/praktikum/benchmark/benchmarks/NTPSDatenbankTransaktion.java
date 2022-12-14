@@ -52,7 +52,7 @@ public class NTPSDatenbankTransaktion {
         updateValueTupel("branchid","balance", "branches", branchId, delta);
         updateValueTupel("tellerid", "balance","tellers", tellerId, delta);
 
-        NTPSDatenbankErzeugen.insertHistory(accId, tellerId, branchId, delta, updatedAccountBalance, comment);
+        NTPSDatenbankErzeugen.insertHistory(connection, accId, tellerId, branchId, delta, updatedAccountBalance, comment);
 
         return updatedAccountBalance;
     }

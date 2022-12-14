@@ -23,19 +23,24 @@ public class NTPSDatenbankErzeugen {
         final int tupelsPerThread = count / threadsCount;
         withConnection(connection -> {
             takeTime("Gesamt ohne Connection mit %d Tupeln".formatted(count), () -> {
-                final CompletableFuture<Boolean>[] threads = new CompletableFuture[threadsCount];
+                //final CompletableFuture<Boolean>[] threads = new CompletableFuture[threadsCount];
 
                 for (int i = 0; i < threadsCount; i++) {
-                    threads[i] = insertAccountsAsync(tupelsPerThread, n, i * tupelsPerThread, connection);
+                    try {
+                        insertAccountsAsync(tupelsPerThread, n, i * tupelsPerThread, connection).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //threads[i] = insertAccountsAsync(tupelsPerThread, n, i * tupelsPerThread, connection);
                 }
 
-                for (int i = 0; i < threadsCount; i++) {
+                /*for (int i = 0; i < threadsCount; i++) {
                     try {
                         threads[i].get();
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
             });
             return null;
         });
@@ -76,22 +81,18 @@ public class NTPSDatenbankErzeugen {
         });
     }
 
-    public static void insertHistory(int accId, int tellerId, int branchId, int delta, int updatedAccountBalance, String comment) throws SQLException {
-        withConnection(connection -> {
-            String query = "INSERT INTO history (accid, tellerid, branchid, delta, accbalance, cmmnt) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement insertStatement = connection.prepareStatement(query);
-            insertStatement.setInt(1, accId);
-            insertStatement.setInt(2, tellerId);
-            insertStatement.setInt(3, branchId);
-            insertStatement.setInt(4, delta);
-            insertStatement.setInt(5, updatedAccountBalance);
-            insertStatement.setString(6, comment);
+    public static void insertHistory(Connection connection, int accId, int tellerId, int branchId, int delta, int updatedAccountBalance, String comment) throws SQLException {
+        String query = "INSERT INTO history (accid, tellerid, branchid, delta, accbalance, cmmnt) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement insertStatement = connection.prepareStatement(query);
+        insertStatement.setInt(1, accId);
+        insertStatement.setInt(2, tellerId);
+        insertStatement.setInt(3, branchId);
+        insertStatement.setInt(4, delta);
+        insertStatement.setInt(5, updatedAccountBalance);
+        insertStatement.setString(6, comment);
 
-            insertStatement.execute();
-            insertStatement.close();
-
-            return null;
-        });
+        insertStatement.execute();
+        insertStatement.close();
     }
 
     private static CompletableFuture<Boolean> insertAccountsAsync(final int count, final int n, final int firstIndex, final Connection connection) {
