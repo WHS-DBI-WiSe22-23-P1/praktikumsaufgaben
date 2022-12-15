@@ -30,6 +30,7 @@ public class LoadDriver {
         this.phases = phases;
     }
 
+    //TODO - before test SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
     public static void main(String[] args) {
         final Duration thinkTime = Duration.ofMillis(50);
         final Map<Phases, Duration> phases = Phases.defaults();
@@ -41,7 +42,7 @@ public class LoadDriver {
                 try {
                     withConnection(connection -> {
                         NTPSDatenbankTransaktion ntpsDatenbankTransaktion = new NTPSDatenbankTransaktion(connection);
-                        //ntpsDatenbankTransaktion.initialisePreparedStatements();
+                        ntpsDatenbankTransaktion.initialisePreparedStatements();
 
                         RandomNTPSDatenbankTransaktionen randomNTPSDatenbankTransaktionen = new RandomNTPSDatenbankTransaktionen(ntpsDatenbankTransaktion, 100);
                         final Map<String, Pair<Double, Runnable>> transactions = new HashMap<>();
@@ -82,15 +83,11 @@ public class LoadDriver {
     }
 
     private void printResult() {
-        System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!%n", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
+        System.out.printf("Run %d transactions in %.3f seconds, that is %.2f transactions per second!%n", transactionsRun, (measurePhaseTime.toMillis() / 1000f), transactionsRun /  (measurePhaseTime.toMillis() / 1000f));
         for(final String transactionName : stats.keySet()) {
             final Pair<Integer, Duration> myStats = stats.get(transactionName);
-            //TODO umrechnung von millisecond in seconds und txs pro second
-            if( myStats.getValue().toSeconds() > 0)
-                System.out.printf("\tRun %d %s in %d seconds, that is %d transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
-            else {
-                System.out.printf("\tRun %d %s in %d milliseconds, that is %.2f transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toMillis(), myStats.getKey() / (myStats.getValue().toMillis() / 1000f));
-            }
+
+            System.out.printf("\tRun %d %s in  %.3f seconds, that is %.2f transactions per second!%n", myStats.getKey(), transactionName, (myStats.getValue().toMillis() / 1000f), myStats.getKey() / (myStats.getValue().toMillis() / 1000f));
         }
     }
 

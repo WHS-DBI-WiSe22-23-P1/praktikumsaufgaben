@@ -81,8 +81,6 @@ public class NTPSDatenbankTransaktion {
         return updatedAccountBalance;
     }
 
-    //TODO - create index in history for accbalance (improvement)
-    //CREATE INDEX accbalance ON history(accbalance);
     public int getNumberOfDeltaBalance(int delta) throws SQLException {
         String query = "SELECT COUNT(*) FROM history WHERE accbalance = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
