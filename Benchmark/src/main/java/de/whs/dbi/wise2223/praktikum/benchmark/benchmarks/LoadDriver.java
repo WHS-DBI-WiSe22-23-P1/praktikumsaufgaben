@@ -32,7 +32,7 @@ public class LoadDriver {
 
     public static void main(String[] args) {
         final Duration thinkTime = Duration.ofMillis(50);
-        final Map<Phases, Duration> phases = Phases.test();
+        final Map<Phases, Duration> phases = Phases.defaults();
 
         System.out.printf("Start LoadDriver: %s \n",  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
 
