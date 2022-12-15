@@ -1,0 +1,30 @@
+Start LoadDriver: 2022-12-15 15:50:18
+
+Run 2735 transactions in 300 seconds, that is 9 transactions per second!
+	Run 975 Kontostands TX in 1 seconds, that is 975 transactions per second!
+	Run 426 Analyse TX in 781 milliseconds, that is 545,45 transactions per second!
+	Run 1334 Einzahlungs TX in 136 seconds, that is 9 transactions per second!
+
+Run 2699 transactions in 300 seconds, that is 8 transactions per second!
+	Run 922 Kontostands TX in 1 seconds, that is 922 transactions per second!
+	Run 420 Analyse TX in 759 milliseconds, that is 553,36 transactions per second!
+	Run 1357 Einzahlungs TX in 138 seconds, that is 9 transactions per second!
+
+Run 2688 transactions in 300 seconds, that is 8 transactions per second!
+	Run 933 Kontostands TX in 1 seconds, that is 933 transactions per second!
+	Run 403 Analyse TX in 735 milliseconds, that is 548,30 transactions per second!
+	Run 1352 Einzahlungs TX in 139 seconds, that is 9 transactions per second!
+
+Run 2699 transactions in 300 seconds, that is 8 transactions per second!
+	Run 917 Kontostands TX in 1 seconds, that is 917 transactions per second!
+	Run 435 Analyse TX in 838 milliseconds, that is 519,09 transactions per second!
+	Run 1347 Einzahlungs TX in 138 seconds, that is 9 transactions per second!
+
+Run 2673 transactions in 300 seconds, that is 8 transactions per second!
+	Run 929 Kontostands TX in 1 seconds, that is 929 transactions per second!
+	Run 388 Analyse TX in 721 milliseconds, that is 538,14 transactions per second!
+	Run 1356 Einzahlungs TX in 140 seconds, that is 9 transactions per second!
+
+Total-TXs: 13.494 / 41
+Kontostands-TXs: 4.676
+Analyse-TXs: 2.704,34
