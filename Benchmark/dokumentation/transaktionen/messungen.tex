@@ -1,5 +1,21 @@
+\subsection{Maximaler erreichbarer Transaktionsdurchsatz}\label{subsec:maximaler-erreichbarer-transaktionsdurchsatz}
+Messzeitraum: 300s (5 min)
+begrenzende Variable: Think-Time (50 ms / 0,05 s)
+maximale erreichbare Transaktionen pro Thread im Loaddriver: 6.000 TXs / 20 TXs/s
+[Verteilung der Ausführung der Lasttransaktionen durch die relative Gewichtung:
+    Kontostands-TX: 2.100 TXs (35\%)
+    Einzahlungs-TX: 3.000 TXs (50\%)
+    Analyse-TX:     900 TXs   (15\%)]
+Last1: 5 x Loaddriver-Threads * 20 TXs/s = 100 TXs/s
+Last2: 2 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 200 TXs/s
+Last2: 3 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 300 TXs/s
 \subsection{Last1: Benchmark für 5 remote Load Driver}\label{subsec:benchmark-5-remote-load-driver}
-
+\subsubsection*{Version1}
+[Log: transactions\_last1]
+[Tablle: Gesamte Transaktionen / pro sekunde, Kontostands-TXs / pro sekunde, Analyse-TXs / pro sekunde, Einzahlungs-TXs / pro sekunde]
 \subsection{Last2: Benchmark für 5+5 remote Load Driver}\label{subsec:benchmark-5-5-remote-load-driver}
-
+\subsubsection*{Version1}
+[Log: transactions\_last2]
 \subsection{Last3: Benchmark für 5+5+5 remote Load Driver}\label{subsec:benchmark-5-5-5-remote-load-driver}
+\subsubsection*{Version1}
+[Log: transactions\_last3]

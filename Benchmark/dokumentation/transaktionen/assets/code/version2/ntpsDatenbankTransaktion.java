@@ -6,8 +6,8 @@ public class NTPSDatenbankTransaktion {
         this.connection = connection;
     }
 
-    public int getBalanceFromAccount(int accId) throws SQLException {
-        String statement = "SELECT balance FROM accounts WHERE accid = ? LIMIT 1";
+    public int getBalanceFromAccountWithViews(int accId) throws SQLException {
+        String statement = "SELECT balance FROM accounts_balances WHERE accid = ? LIMIT 1";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, accId);
 
@@ -33,8 +33,8 @@ public class NTPSDatenbankTransaktion {
         return updatedAccountBalance;
     }
 
-    public int getNumberOfDeltaBalance(int delta) throws SQLException {
-        String query = "SELECT COUNT(*) FROM history WHERE accbalance = ?";
+    public int getNumberOfDeltaBalanceWithViews(int delta) throws SQLException {
+        String query = "SELECT balance_number FROM accounts_balance_numbers WHERE accbalance = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, delta);
 

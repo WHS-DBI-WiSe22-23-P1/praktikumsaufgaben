@@ -1,6 +1,7 @@
 Anschließend werden die unterschiedlichen Versionen des Java-Programms im Hinblick auf die verschiedenen Lasttransaktionen dokumentiert und anhand von Versionen gegliedert.
 Der gesamte Quellcode des Programms ist im Anhang zu finden.
-\subsection{Version1}\label{subsec:version1}
+
+\subsection{Version 1}\label{subsec:version1}
 In der ersten Version wurde ein rudimentäres Programm erstellt, das die unterschiedlichen Lasttransaktionen einfach und ohne Verbesserungen ausführt.
 Hierbei wird bei der Kontostandtransaktion ein SELECT-Statement ausgeführt, das den aktuellen Kontostand (balance) eines Kontos mit der Kontonummer (accid) aus der Relation accounts zurückgibt
 \lstinputlisting[breaklines,language=Java,label={lst:version1-getBalanceFromAccount},caption={Quellcode zur Kontostandstransaktion der ersten Version}]{assets/code/version1/getBalanceFromAccount.java}
@@ -11,11 +12,23 @@ Als letztes wird dann noch ein Einzahlungsbeleg in der Relation history hinterle
 Die letzte Transaktion gibt die Anzahl der aktualisierten Kontostandsbeträge (accbalance) in der Relation history mittels eines SELECT-Statements zurück.
 In dem alle Tupel mit dem genauen Kontostandsbetrag (delta) gezählt werden.
 \lstinputlisting[breaklines,language=Java,label={lst:version1-getNumberOfDeltaBalance},caption={Quellcode zur Analysetransaktion der ersten Version}]{assets/code/version1/getNumberOfDeltaBalance.java}
-\subsection{Version2}\label{subsec:version2}
+
+\subsection{Version 2}\label{subsec:version2}
 In der zweiten Version wurden die beiden Transaktionen Kontostand-TX und Analyse-TX mit der Verbesserung Database Views geändert.
 Analog zu ersten Version wurden hierbei nur die SELECT-Statements (Zeile 2 (getBalanceFromAccountWithView / getNumberOfDeltaBalanceWithViews)) geändert, sodass jetzt durch die Views die Anfragen bearbeitet werden.
 Weitere Einzelheiten können unter \hyperref[sec:optimierungen]{\textbf{Optimierungen}} gefunden werden.
-\lstinputlisting[breaklines,language=Java,label={lst:version2-getBalanceFromAccount},caption={Quellcode zur Kontostandstransaktion der zweiten Version}]{assets/code/version2/getBalanceFromAccount.java}
-\lstinputlisting[breaklines,language=Java,label={lst:version2-getNumberOfDeltaBalance},caption={Quellcode zur Analysetransaktion der zweiten Version}]{assets/code/version2/getNumberOfDeltaBalance.java}
+\lstinputlisting[breaklines,language=Java,label={lst:version2-getBalanceFromAccount},caption={Quellcode zur Kontostandstransaktion der zweiten Version}]{assets/code/version2/getBalanceFromAccountWithViews.java}
+\lstinputlisting[breaklines,language=Java,label={lst:version2-getNumberOfDeltaBalance},caption={Quellcode zur Analysetransaktion der zweiten Version}]{assets/code/version2/getNumberOfDeltaBalanceWithViews.java}
 
-\subsection{Version3 - Final}\label{subsec:version3---final}
+\subsection{Version 3}\label{subsec:version3}
+In der dritten Version wurden die Prepared-Statements aus der ersten Version verbessert, indem diese nur einmal während des Startens erstellt und dann an das DBMS übermittelt werden.
+Dementsprechend werden diese nicht für jede einzelne Kontostand-TX oder Analyse-TX erstellt und gesendet, sondern es wird nur noch der Parameter (accid / accbalance) geändert und dann das Statement ausgeführt.
+\lstinputlisting[breaklines,language=Java,label={lst:version3-initialisePreparedStatements},caption={Quellcode zur Initialisierung der Prepared-Statements der dritten Version}]{assets/code/version3/initialisePreparedStatements.java}
+\lstinputlisting[breaklines,language=Java,label={lst:version3-getBalanceFromAccountWithInitialisedStatements},caption={Quellcode zur Kontostandstransaktion der dritten Version}]{assets/code/version3/getBalanceFromAccountWithInitialisedStatements.java}
+\lstinputlisting[breaklines,language=Java,label={lst:version3-getNumberOfDeltaBalanceWithInitialisedStatements},caption={Quellcode zur Analysetransaktion der dritten Version}]{assets/code/version3/getNumberOfDeltaBalanceWithInitialisedStatements.java}
+
+\subsection{Version 4}\label{subsec:version4}
+In der vierten Version wurde nun das Indexing in der Tabelle history verbessert.
+Weitere Informationen im Abschnitt \hyperref[sec:optimierungen]{\textbf{Optimierungen-Indices}}.
+
+\subsection{Version 5 - Batch}\label{subsec:version5-batch}

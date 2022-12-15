@@ -1,20 +1,42 @@
 \subsection{Verbesserungsideen}\label{subsec:verbesserungsideen}
 Nachfolgend werden mögliche Verbesserungsideen in Bezug auf den Programmcode und dem DBMS aufgelistet und mittels konkreter Implementierung bzw. Umsetzung erläutert.
-\subsubsection{Batches}
-
 \subsubsection{Views}
-Als zweite Verbesserungsidee können Views in Betracht gezogen werden.
+Als erste Verbesserungsidee können Views in Betracht gezogen werden.
 Diese sogenannten Database Views sind gespeicherte Abfragen, die beim Aufrufen eine Ergebnismenge erzeugen, wie eine virtuelle Tabelle.
 Per Definition ist eine View eine benannte Abfrage, die im Datenbankkatalog gespeichert ist.
 
-\subsection{Programmcode}\label{subsec:programmcode}
+\subsubsection{Initialisierte Prepared-Statements}
+Als zweite Verbesserung das Initialisieren der Prepared-Statements während dem Start.
+Diese werden serverseitig vorbereitet, sodass nur noch die Platzhalter in der Abfrage mit den jeweiligen Parametern ersetzt werden müssen.
+Dabei bieten Prepared-Statements folgende Vorteile: zum einen weniger Overhead für das Parsen der Anfragen bei jeder Ausführung und außerdem Schutz vor SQL-Injections, da die zuvor übermittelten Anweisungen nur an den Platzhaltern geändert werden können und nur mit den jeweiligen richtigen Parameter-Datentypen.
+\subsubsection{Indices}
+
 \subsubsection{Batches}
 
-\subsubsection{Views}
+\subsection{Programmcode}\label{subsec:programmcode}
+\subsubsection{Views - Version 2}
 Die Views wurden nur für die Kontostandtransaktion und der Analysetransaktion umgesetzt, da diese beiden ein SELECT-Statement ausführen, das sich für Database Views eignet.
 Dabei muss vor der Nutzung der Views im Programmcode diese in der Datenbank hinterlegt werden, indem diese über die MySQL Workbench erstellt und an das DBMS gesendet werden.
 \lstinputlisting[breaklines,language=SQL,label={lst:version2-createViewAccountsBalances},caption={SQL Statement zur Erstellung der View für die Kontostandtransaktion}]{assets/code/version2/createViewAccountsBalances.sql}
 \lstinputlisting[breaklines,language=SQL,label={lst:version2-createViewAccountsBalanceNumbers},caption={SQL Statement zur Erstellung der View für die Analysetransaktion}]{assets/code/version2/createViewAccountsBalanceNumbers.sql}
 
+\subsubsection{Initialisierte Prepared-Statements - Version 3}
+Das Initialisieren der Prepared-Statements während dem Start verbessert die Performance der einzelnen Transaktionen (Kontostand-TX und Analyse-TX).
+Siehe \hyperref[subsec:version3]{\textbf{Dokumentation-Version 3}}.
 
+\subsubsection{Indices - Version 4}
+Um ein weiteren Index in der Relation history mit dem Verweis auf accbalance zu erstellen muss die untere SQL-Anweisung ausgeführt werden.
+\lstinputlisting[breaklines,language=SQL,label={lst:version4-createIndexAccbalanceInHistory},caption={SQL Statement zur Erstellung des Index für accbalance in der Relation history}]{assets/code/version4/createIndexAccbalanceInHistory.sql}
+Hierbei wird ein Index für accbalance erstellt, der für die Analyse-TX genutzt wird, um die einzelnen Beträge (accbalance) in der View (accounts\_balance\_numbers) zu gruppieren, zu vergleichen und die Anzahl dieser zurückzuliefern.
+
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=\linewidth]{assets/img/database-history-indices}
+    \caption{DBMS - Indices in history Relation}
+    \label{fig:database-indices-history}
+\end{figure}
+\begin{center}
+
+\end{center}
+\subsubsection{Batches - Version 5}
 \subsection{Datenbankmanagementsystem}\label{subsec:datenbankmanagementsystem}

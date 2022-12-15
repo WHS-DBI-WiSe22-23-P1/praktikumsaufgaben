@@ -1,0 +1,1 @@
+CREATE INDEX accbalance ON history(accbalance);
