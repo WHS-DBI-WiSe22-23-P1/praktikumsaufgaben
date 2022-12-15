@@ -32,7 +32,7 @@ public class LoadDriver {
 
     public static void main(String[] args) {
         final Duration thinkTime = Duration.ofMillis(50);
-        final Map<Phases, Duration> phases = Phases.defaults();
+        final Map<Phases, Duration> phases = Phases.test();
 
         System.out.printf("Start LoadDriver: %s \n",  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
 
@@ -85,7 +85,11 @@ public class LoadDriver {
         System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!%n", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
         for(final String transactionName : stats.keySet()) {
             final Pair<Integer, Duration> myStats = stats.get(transactionName);
-            System.out.printf("\tRun %d %s in %d seconds, that is %d transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
+            if( myStats.getValue().toSeconds() > 0)
+                System.out.printf("\tRun %d %s in %d seconds, that is %d transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
+            else {
+                System.out.printf("\tRun %d %s in %d milliseconds, that is %.2f transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toMillis(), myStats.getKey() / (myStats.getValue().toMillis() / 1000f));
+            }
         }
     }
 
@@ -153,9 +157,9 @@ public class LoadDriver {
 
         public static @NotNull Map<Phases, Duration> test() {
             final Map<Phases, Duration> defaults = new EnumMap<>(Phases.class);
-            defaults.put(WARMUP, Duration.ofMinutes(4/3));
-            defaults.put(MEASURE, Duration.ofMinutes(5/3));
-            defaults.put(TEARDOWN, Duration.ofMinutes(1/3));
+            defaults.put(WARMUP, Duration.ofMinutes(1));
+            defaults.put(MEASURE, Duration.ofMinutes(5/4));
+            defaults.put(TEARDOWN, Duration.ofMinutes(1/4));
 
             return defaults;
         }
