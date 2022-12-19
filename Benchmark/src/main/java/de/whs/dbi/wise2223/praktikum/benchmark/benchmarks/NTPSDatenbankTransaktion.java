@@ -1,18 +1,23 @@
 package de.whs.dbi.wise2223.praktikum.benchmark.benchmarks;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class NTPSDatenbankTransaktion {
+    @NotNull
+    private final Connection connection;
 
-    private Connection connection;
+    private PreparedStatement preparedStatementEinzahlung;
+    private PreparedStatement preparedStatementAnalyse;
 
-    private PreparedStatement preparedStatementEinzahlung, preparedStatementAnalyse;
-
-    public NTPSDatenbankTransaktion(Connection connection) {
+    public NTPSDatenbankTransaktion(final @NotNull Connection connection) throws SQLException {
         this.connection = connection;
+
+        connection.setAutoCommit(false);
     }
 
     public void initialisePreparedStatements() throws SQLException {
@@ -77,6 +82,7 @@ public class NTPSDatenbankTransaktion {
         updateValueTupel("tellerid", "balance","tellers", tellerId, delta);
 
         NTPSDatenbankErzeugen.insertHistory(connection, accId, tellerId, branchId, delta, updatedAccountBalance, comment);
+        connection.commit();
 
         return updatedAccountBalance;
     }

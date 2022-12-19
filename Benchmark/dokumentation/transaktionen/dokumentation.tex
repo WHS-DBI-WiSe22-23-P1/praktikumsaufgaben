@@ -31,4 +31,7 @@ Dementsprechend werden diese nicht für jede einzelne Kontostand-TX oder Analyse
 In der vierten Version wurde nun das Indexing in der Tabelle history verbessert.
 Weitere Informationen im Abschnitt \hyperref[sec:optimierungen]{\textbf{Optimierungen-Indices}}.
 
-\subsection{Version 5 - Batch}\label{subsec:version5-batch}
+\subsection{Version 5}\label{subsec:version5}
+    In der fünften Version wurde an den nötigen stellen ein manueller Commit ausgeführt.
+    Damit ist das Paket der Datenkonsistenz größer und es wird Leistung eingespart.
+    \lstinputlisting[breaklines,language=Java,label={lst:version5-updateBalance},caption={Quellcode mit manuellen Commits}]{assets/code/version5/updateBalance.java}

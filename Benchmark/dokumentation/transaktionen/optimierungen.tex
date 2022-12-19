@@ -11,7 +11,13 @@ Diese werden serverseitig vorbereitet, sodass nur noch die Platzhalter in der Ab
 Dabei bieten Prepared-Statements folgende Vorteile: zum einen weniger Overhead für das Parsen der Anfragen bei jeder Ausführung und außerdem Schutz vor SQL-Injections, da die zuvor übermittelten Anweisungen nur an den Platzhaltern geändert werden können und nur mit den jeweiligen richtigen Parameter-Datentypen.
 \subsubsection{Indices}
 
+\subsubsection{Manuelles Commiten}
+    Damit die Datenintegrität nur an semantisch sinnvollen Punkten sichergestellt wird, haben wir Autocommit deaktiviert.
+    Dadurch wird nur an sinnvollen Stellen Aufwand wür die Überprüfung aufgebracht.
+
 \subsubsection{Batches}
+    Um mehrere Transaktionen in einem an das DBMS zu übermitteln wollten wir zunächst mit Batches optimieren.
+    Diese Idee haben wir allerdings verworfen, da bei der verwendung von Prepared Statements, nicht mehrere verschiedene Prepared Statements demselben Batch hinzugefügt werden können.
 
 \subsection{Programmcode}\label{subsec:programmcode}
 \subsubsection{Views - Version 2}
@@ -25,7 +31,7 @@ Das Initialisieren der Prepared-Statements während dem Start verbessert die Per
 Siehe \hyperref[subsec:version3]{\textbf{Dokumentation-Version 3}}.
 
 \subsubsection{Indices - Version 4}
-Um ein weiteren Index in der Relation history mit dem Verweis auf accbalance zu erstellen muss die untere SQL-Anweisung ausgeführt werden.
+Um einen weiteren Index in der Relation history mit dem Verweis auf accbalance zu erstellen muss die untere SQL-Anweisung ausgeführt werden.
 \lstinputlisting[breaklines,language=SQL,label={lst:version4-createIndexAccbalanceInHistory},caption={SQL Statement zur Erstellung des Index für accbalance in der Relation history}]{assets/code/version4/createIndexAccbalanceInHistory.sql}
 Hierbei wird ein Index für accbalance erstellt, der für die Analyse-TX genutzt wird, um die einzelnen Beträge (accbalance) in der View (accounts\_balance\_numbers) zu gruppieren, zu vergleichen und die Anzahl dieser zurückzuliefern.
 
@@ -38,5 +44,4 @@ Hierbei wird ein Index für accbalance erstellt, der für die Analyse-TX genutzt
 \begin{center}
 
 \end{center}
-\subsubsection{Batches - Version 5}
 \subsection{Datenbankmanagementsystem}\label{subsec:datenbankmanagementsystem}

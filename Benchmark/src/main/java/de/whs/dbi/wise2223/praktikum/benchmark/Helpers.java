@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 import static de.whs.dbi.wise2223.praktikum.benchmark.ConnectionData.*;
 
@@ -62,7 +61,7 @@ public class Helpers {
     }
 
     public static <T> T withConnection(ConnectionFunction<T> action) throws SQLException {
-        Connection connection = DriverManager.getConnection(URL_REMOTE, USER, PASSWORD);
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         final T res = action.call(connection);
         connection.close();
 
