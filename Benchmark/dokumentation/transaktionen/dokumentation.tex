@@ -9,6 +9,7 @@ Die Einzahlungstransaktion unterteilt sich in mehrere Einzelaktionen.
 In den zuerst der Kontostand (balance) aus der Relationen accounts mit dem Einzahlungsbetrag (delta) aktualisiert wird und dann die Beträge (balance) von den jeweiligen Geldautomaten (teller) mit der Nummer (tellerid) und der jeweiligen Zeigstelle (branch) mit der Nummer (branchid) mittels der Methode updateBalance mit dem Einzahlungsbetrag (delta) aktualisiert werden.
 Als letztes wird dann noch ein Einzahlungsbeleg in der Relation history hinterlegt.
 \lstinputlisting[breaklines,language=Java,label={lst:version1-updateBalance},caption={Quellcode zur Einzahlungstransaktion der ersten Version}]{assets/code/version1/updateBalance.java}
+\lstinputlisting[breaklines,language=Java,label={lst:version1-insertHistory},caption={Quellcode zur Einfügetransaktion vom Einzahlungsbeleg}]{assets/code/version1/insertHistory.java}
 Die letzte Transaktion gibt die Anzahl der aktualisierten Kontostandsbeträge (accbalance) in der Relation history mittels eines SELECT-Statements zurück.
 In dem alle Tupel mit dem genauen Kontostandsbetrag (delta) gezählt werden.
 \lstinputlisting[breaklines,language=Java,label={lst:version1-getNumberOfDeltaBalance},caption={Quellcode zur Analysetransaktion der ersten Version}]{assets/code/version1/getNumberOfDeltaBalance.java}
@@ -32,6 +33,6 @@ In der vierten Version wurde nun das Indexing in der Tabelle history verbessert.
 Weitere Informationen im Abschnitt \hyperref[sec:optimierungen]{\textbf{Optimierungen-Indices}}.
 
 \subsection{Version 5}\label{subsec:version5}
-    In der fünften Version wurde an den nötigen stellen ein manueller Commit ausgeführt.
-    Damit ist das Paket der Datenkonsistenz größer und es wird Leistung eingespart.
-    \lstinputlisting[breaklines,language=Java,label={lst:version5-updateBalance},caption={Quellcode mit manuellen Commits}]{assets/code/version5/updateBalance.java}
+In der fünften Version wurde an den nötigen Stellen ein manueller Commit ausgeführt.
+Damit ist das Paket der Datenkonsistenz größer und es wird Leistung eingespart.
+\lstinputlisting[breaklines,language=Java,label={lst:version5-updateBalance},caption={Quellcode mit manuellen Commits}]{assets/code/version5/updateBalance.java}
