@@ -47,6 +47,8 @@ Außerdem kann aus der relativen Gewichtung für die unterschiedlichen Lasttrans
 \newpage
 
 \subsection{Last2: Benchmark für 5+5 remote Load Driver}\label{subsec:benchmark-5-5-remote-load-driver}
+
+[Log: transactions\_last2]
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|}
@@ -63,17 +65,26 @@ Außerdem kann aus der relativen Gewichtung für die unterschiedlichen Lasttrans
 \end{table}
 
 \subsection{Last3: Benchmark für 5+5+5 remote Load Driver}\label{subsec:benchmark-5-5-5-remote-load-driver}
+[Log: transactions\_last3]
 \begin{table}[h]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        Version & Gesamte TXs & Kontostands-TXs/s & Analyse-TXs/s  & Einzahlungs-TXs/s & TXs/s \\  \hline
-        1 & 51.080 & 2.644 & 505 & 326 & 170 \\ \hline
-        2 & 54.824 & 2.103 & 438 & 468 & 183 \\ \hline
-        3 & 54.754 & 2.152 & 435 & 467 & 182 \\ \hline
-        4 & 63.997 & 6.514 & 7.197 & 735 & 313 \\ \hline
-        5 & & & & & \\ \hline
-    \end{tabular}
-    \caption{Messergebnisse des Benchmarks bei Last3}
-    \label{tab:5}
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXS
+            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
+            \hline\hline
+            1 & 51.080 & 2.644 & 505 & 326 & 170 \\
+            \hline
+            2 & 54.824 & 2.103 & 438 & 468 & 183 \\
+            \hline
+            3 & 54.754 & 2.152 & 435 & 467 & 182 \\
+            \hline
+            4 & 63.997 & 6.514 & 7.197 & 735 & 213 \\
+            \hline
+            5 & 64.299 & 6.492 & 7.229 & 764 & 228 \\
+
+        \end{tabular}
+        \caption{Messungen Last 3}
+        \label{Tabelle 3}
+    \end{center}
 \end{table}
