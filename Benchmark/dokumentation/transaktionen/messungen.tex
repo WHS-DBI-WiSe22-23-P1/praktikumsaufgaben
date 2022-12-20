@@ -1,14 +1,33 @@
 \subsection{Maximaler erreichbarer Transaktionsdurchsatz}\label{subsec:maximaler-erreichbarer-transaktionsdurchsatz}
-Messzeitraum: 300s (5 min)
-begrenzende Variable: Think-Time (50 ms / 0,05 s)
-maximale erreichbare Transaktionen pro Thread im Loaddriver: 6.000 TXs / 20 TXs/s
-[Verteilung der Ausführung der Lasttransaktionen durch die relative Gewichtung:
-    Kontostands-TX: 2.100 TXs (35\%)
-    Einzahlungs-TX: 3.000 TXs (50\%)
-    Analyse-TX:     900 TXs   (15\%)]
-Last1: 5 x Loaddriver-Threads * 20 TXs/s = 100 TXs/s
-Last2: 2 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 200 TXs/s
-Last2: 3 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 300 TXs/s
+Um den maximalen erreichbaren Transaktionsdurchsatz zu berechnen, müssen nur die begrenzenden Variablen, in diesem Fall Think-Time mit 50 ms, angeschaut werden.
+Infolgedessen wird theoretisch angenommen, dass die verschiedenen Lasttransaktionen bei der Ausführung keine Zeit beanspruchen.
+Schließlich ergibt sich dann aus dem Messzeitraum von 300s (5 min) und der begrenzenden Variable mit 0,05s der maximale erreichbare Transaktionsdurchsatz pro Thread im Loaddriver von 6.000 TXs (300s / 0,05s) und somit 20 TXs pro Sekunde.
+Außerdem kann aus der relativen Gewichtung für die unterschiedlichen Lasttransaktionen folgende Verteilung der Transaktionsanzahl der verschiedenen Lasttransaktionen und Last-Profilen bestimmt werden.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Lasttransaktion & relative Gewichtung [\%] & Transaktionsanzahl [TXs] \\  \hline
+        Kontostands-TX & 35 & 2.100 \\ \hline
+        Einzahlungs-TX & 50 & 3.000 \\ \hline
+        Analyse-TX & 15 & 900 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für die Verteilung der Transaktionsanzahl der unterschiedlichen Lasttransaktionen bei verschiedenen relativen Gewichtungen}
+    \label{tab:1}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|c|}
+        \hline
+        Last & Berechnung [\%] & Transaktionsdurchsatz [TXs/s] \\  \hline
+        Last1 & 5 x Threads * 20 TXs/s & 100 \\ \hline
+        Last2 & 2 x Client (5 x Threads * 20 TXs/s) & 200 \\ \hline
+        Last3 & 3 x Client (5 x Threads * 20 TXs/s) & 300 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für den Transaktiondurchsatz pro Sekunde bei den verschiedenen Last-Profilen}
+    \label{tab:2}
+\end{table}
 \subsection{Last1: Benchmark für 5 remote Load Driver}\label{subsec:benchmark-5-remote-load-driver}
 \subsubsection*{Version1}
 [Log: transactions\_last1]
