@@ -1,5 +1,5 @@
 \subsection{Verbesserungsideen}\label{subsec:verbesserungsideen}
-Nachfolgend werden mögliche Verbesserungsideen in Bezug auf den Programmcode und dem DBMS aufgelistet und mittels konkreter Implementierung bzw. Umsetzung erläutert.
+Nachfolgend werden mögliche Verbesserungsideen in Bezug auf den Programmcode aufgelistet und mittels konkreter Implementierung bzw. Umsetzung erläutert.
 \subsubsection{Views}
 Als erste Verbesserungsidee können Views in Betracht gezogen werden.
 Diese sogenannten Database Views sind gespeicherte Abfragen, die beim Aufrufen eine Ergebnismenge erzeugen, wie eine virtuelle Tabelle.
@@ -11,22 +11,21 @@ Diese werden serverseitig vorbereitet, sodass nur noch die Platzhalter in der Ab
 Dabei bieten Prepared-Statements folgende Vorteile: zum einen weniger Overhead für das Parsen der Anfragen bei jeder Ausführung und außerdem Schutz vor SQL-Injections, da die zuvor übermittelten Anweisungen nur an den Platzhaltern geändert werden können und nur mit den jeweiligen richtigen Parameter-Datentypen.
 \subsubsection{Indices}
 Indices in Relationen werden genutzt, um Tupel effizient mit bestimmten Werten zu finden.
-Ohne einen Index für den zu suchenden Wert muss das MySQL-DBMS mit dem ersten Tupel beginnen und dann durch die gesamte Tabelle lesen.
-Dementsprechend kann das DBMS durch die Indices in einer Tabelle schnell die Position finden, an der die Tupel voran weiter durchsucht werden sollen.
+Ohne einen Index für den zu suchenden Wert muss das MySQL-DBMS mit dem ersten Tupel beginnen und dann durch die gesamte Tabelle gehen.
+Dementsprechend kann das DBMS durch die Indices in einer Tabelle schnell die Position finden, an der die Tupel fortan weiter durchsucht werden sollen.
 
 \subsubsection{Manuelles Commiten}
-    Damit die Datenintegrität nur an semantisch sinnvollen Punkten sichergestellt wird, haben wir Autocommit deaktiviert.
-    Dadurch wird nur an sinnvollen Stellen Aufwand wür die Überprüfung aufgebracht.
+Damit die Datenintegrität nur an semantisch sinnvollen Punkten sichergestellt wird, haben wir Autocommit deaktiviert.
+Dadurch wird nur an sinnvollen Stellen Aufwand für die Überprüfung aufgebracht.
 
 \subsubsection{Batches}
-    Um mehrere Transaktionen in einem an das DBMS zu übermitteln wollten wir zunächst mit Batches optimieren.
-    Diese Idee haben wir allerdings verworfen, da bei der verwendung von Prepared Statements, nicht mehrere verschiedene Prepared Statements demselben Batch hinzugefügt werden können.
+Um mehrere Transaktionen in einem an das DBMS zu übermitteln wollten wir zunächst mit Batches optimieren.
+Diese Idee haben wir allerdings verworfen, da bei der Verwendung von Prepared Statements, nicht mehrere verschiedene Prepared Statements demselben Batch hinzugefügt werden können.
 \subsubsection{Stored Procedure}
-Stored Procedures kann man sich als kleine Datenbank-Programme vorstellen. Immer wieder vorkommende SQL-Befehlsfolgen werden zu einer Einheit zusmamengefasst und in der Datenbank abgelegt.
-Der Prozeduraufruf wird dann nur ein mal zum Server geschickt und alle Aufrufe erfolgen innerhalb der Datenbank.
-
-
-
+Stored Procedures sind kleine abgespeicherte Datenbank-Programme, die wiederholende SQL-Befehlsfolgen zu einer Einheit zusammenfassen und in der Datenbank abgelegt werden.
+Der Prozeduraufruf wird dann nur noch ein mal zum Server geschickt und dann erfolgen alle Aufrufe innerhalb der Datenbank.
+Eine mögliche Umsetzung mittels SQL-Code würde, wie nachfolgend zu sehen, umsetzbar sein.
+\lstinputlisting[breaklines,language=SQL,label={lst:stored-procedure},caption={SQL Code zum Erstellen und Ablegen einer Stored Procedure im DBMS}]{assets/code/storedProcedure.sql}
 \subsection{Programmcode}\label{subsec:programmcode}
 \subsubsection{Views - Version 2}
 Die Views wurden nur für die Kontostandtransaktion und der Analysetransaktion umgesetzt, da diese beiden ein SELECT-Statement ausführen, das sich für Database Views eignet.
@@ -49,7 +48,3 @@ Hierbei wird ein Index für accbalance erstellt, der für die Analyse-TX genutzt
     \caption{DBMS - Indices in history Relation}
     \label{fig:database-indices-history}
 \end{figure}
-\begin{center}
-
-\end{center}
-\subsection{Datenbankmanagementsystem}\label{subsec:datenbankmanagementsystem}
