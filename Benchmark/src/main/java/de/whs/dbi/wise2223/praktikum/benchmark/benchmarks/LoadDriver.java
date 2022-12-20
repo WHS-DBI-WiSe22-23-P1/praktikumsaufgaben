@@ -42,7 +42,7 @@ public class LoadDriver {
                 try {
                     withConnection(connection -> {
                         NTPSDatenbankTransaktion ntpsDatenbankTransaktion = new NTPSDatenbankTransaktion(connection);
-                        //ntpsDatenbankTransaktion.initialisePreparedStatements();
+                        ntpsDatenbankTransaktion.initialisePreparedStatements();
 
                         RandomNTPSDatenbankTransaktionen randomNTPSDatenbankTransaktionen = new RandomNTPSDatenbankTransaktionen(ntpsDatenbankTransaktion, 100);
                         final Map<String, Pair<Double, Runnable>> transactions = new HashMap<>();
