@@ -21,6 +21,11 @@ Dementsprechend kann das DBMS durch die Indices in einer Tabelle schnell die Pos
 \subsubsection{Batches}
     Um mehrere Transaktionen in einem an das DBMS zu übermitteln wollten wir zunächst mit Batches optimieren.
     Diese Idee haben wir allerdings verworfen, da bei der verwendung von Prepared Statements, nicht mehrere verschiedene Prepared Statements demselben Batch hinzugefügt werden können.
+\subsubsection{Stored Procedure}
+Stored Procedures kann man sich als kleine Datenbank-Programme vorstellen. Immer wieder vorkommende SQL-Befehlsfolgen werden zu einer Einheit zusmamengefasst und in der Datenbank abgelegt.
+Der Prozeduraufruf wird dann nur ein mal zum Server geschickt und alle Aufrufe erfolgen innerhalb der Datenbank.
+
+
 
 \subsection{Programmcode}\label{subsec:programmcode}
 \subsubsection{Views - Version 2}
