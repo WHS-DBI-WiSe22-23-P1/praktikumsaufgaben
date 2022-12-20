@@ -67,21 +67,120 @@ Außerdem kann aus der relativen Gewichtung für die unterschiedlichen Lasttrans
     \centering
         \begin{tabular}{|c|c|c|c|c|c|}
             \hline
-            Version & Gesamte TXs & Kontostands-TXs & Analyse-TXs  & Einzahlungs-TXs & TXs \\  \hlinen
-            1 & 51.080 & 2.644 & 505 & 326 & 170 \\ \hline
-            2 & 54.824 & 2.103 & 438 & 468 & 183 \\ \hline
-            3 & 54.754 & 2.152 & 435 & 467 & 182 \\ \hline
-            4 & 63.997 & 6.514 & 7.197 & 735 & 213 \\ \hline
-            5 & 64.299 & 6.492 & 7.229 & 764 & 228 \\ \hline
+            Version & Gesamte TXs & Kontostands--TXs & Analyse--TXs  & Einzahlungs--TXs & TXs \\
+            \hline
+            1 & 51.080 & 2.644 & 505 & 326 & 170 \\
+            \hline
+            2 & 54.824 & 2.103 & 438 & 468 & 183 \\
+            \hline
+            3 & 54.754 & 2.152 & 435 & 467 & 182 \\
+            \hline
+            4 & 63.997 & 6.514 & 7.197 & 735 & 213 \\
+            \hline
+            5 & 64.299 & 6.492 & 7.229 & 764 & 228 \\
+            \hline
         \end{tabular}
         \caption{Messergebnisse des Benchmarks bei Last3 (Transaktionen pro Sekunde)}
         \label{tab:5}
 \end{table}
 
-[Last1-Version1: 69 \% zum maximalen erreichbaren Transaktionsdurchsatz (69 TXs/s)]
-[Last1-Version5: 72 \% (72 TXs/s)] [=> 3 \% (3 TXs/s)]
-[Last2-Version1: 66 \% (132 TXs/s)]
-[Last2-Version5: 71 \% (143 TXs/s)] [=> 5,5 \% (11 TX/s)]
-[Last3-Version1: 56 \% (170 TXs/s)]
-[Last3-Version5: 76 \% (228 TXs/s)] [=> 19,4 \% (58 TX/s)]
-[=> Steigerung des Transaktionsdurchsatzes der Versionen (exponentiell / proportional) durch Optimierungen]
+[Last1--Version1: 69 \% zum maximalen erreichbaren Transaktionsdurchsatz (69 TXs/s)]
+[Last1--Version5: 72 \% (72 TXs/s)] [$\Rightarrow$ 3 \% (3 TXs/s)]
+[Last2--Version1: 66 \% (132 TXs/s)]
+[Last2--Version5: 71 \% (143 TXs/s)] [$\Rightarrow$ 5,5 \% (11 TX/s)]
+[Last3--Version1: 56 \% (170 TXs/s)]
+[Last3--Version5: 76 \% (228 TXs/s)] [$\Rightarrow$ 19,4 \% (58 TX/s)]
+[$\Rightarrow$ Steigerung des Transaktionsdurchsatzes der Versionen (exponentiell / proportional) durch Optimierungen]
+
+\begin{figure}[h!]
+    \center
+    \begin{tikzpicture}[baseline]
+        \begin{axis} [
+            xlabel=Version,
+            ylabel=$\frac{TX}{s}$,
+            enlargelimits=false,
+            axis on top,
+            legend cell align=right,
+            legend style={font=\footnotesize,legend pos=outer north east},
+            ymajorgrids,
+            xmajorgrids,
+        ]
+
+            \addplot[only marks, green] table [
+                x={Version},
+                y expr={\thisrow{TransactionsCount}/\thisrow{TransactionsTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{1:1}
+            ]
+                {assets/values/messungen.csv};
+            \addlegendentry{5 Threads}
+
+            \addplot[only marks, blue] table [
+                x={Version},
+                y expr={\thisrow{TransactionsCount}/\thisrow{TransactionsTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{2:2}
+            ]
+                {assets/values/messungen.csv};
+            \addlegendentry{10 Threads}
+
+            \addplot[only marks, violet] table [
+                x={Version},
+                y expr={\thisrow{TransactionsCount}/\thisrow{TransactionsTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{3:3}
+            ]
+                {assets/values/messungen.csv};
+            \addlegendentry{15 Threads}
+
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Transaktionen pro Thread im Verlauf der Versionen}
+    \label{fig:tx-per-thread}
+\end{figure}
+    \begin{figure}[h!]
+        \center
+        \begin{tikzpicture}[baseline]
+            \begin{axis} [
+                xlabel=Version,
+                ylabel={$\frac{TX}{s}$},
+                enlargelimits=false,
+                axis on top,
+                legend cell align=right,
+                legend style={font=\footnotesize,legend pos=outer north east},
+                ymajorgrids,
+                xmajorgrids,
+            ]
+
+                \addplot[only marks, green] table [
+                x={Version},
+                y expr={\thisrow{KontostandTXCount}/\thisrow{KontostandTXTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{3:3}
+                ]
+                    {assets/values/messungen.csv};
+                \addlegendentry{Kontostand}
+
+                \addplot[only marks, blue] table [
+                x={Version},
+                y expr={\thisrow{AnalyseTXCount}/\thisrow{AnalyseTXTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{3:3}
+                ]
+                    {assets/values/messungen.csv};
+                \addlegendentry{Analyse}
+
+                \addplot[only marks, violet] table [
+                x={Version},
+                y expr={\thisrow{EinzahlungsTXCount}/\thisrow{EinzahlungsTXTime}},
+                col sep=comma,
+                restrict expr to domain={\thisrow{Devices}}{3:3}
+                ]
+                    {assets/values/messungen.csv};
+                \addlegendentry{Einzahlung}
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Transaktionsarten pro Sekunde im Verlauf der Versionen}
+        \label{fig:tx-per-type}
+    \end{figure}
