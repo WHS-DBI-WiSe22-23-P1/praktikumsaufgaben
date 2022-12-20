@@ -10,7 +10,7 @@
                         line4 = $0;
                         gsub(/,/,".",line1); gsub(/,/,".",line2); gsub(/,/,".",line3); gsub(/,/,".",line4);
                         split(line1, fields1, /[^0-9.]+/); split(line2, fields2, /[^0-9.]+/); split(line3, fields3, /[^0-9.]+/); split(line4, fields4, /[^0-9.]+/);
-                        print fields1[2]","fields1[3]","fields2[2]","fields2[5]","fields3[2]","fields3[5]","fields4[2]","fields4[5]
+                        print fields1[2]","fields1[3]","fields2[2]","fields2[3]","fields3[2]","fields3[3]","fields4[2]","fields4[3]
                     }
                 }
             }
