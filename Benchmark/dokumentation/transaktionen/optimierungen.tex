@@ -10,6 +10,9 @@ Als zweite Verbesserung das Initialisieren der Prepared-Statements während dem 
 Diese werden serverseitig vorbereitet, sodass nur noch die Platzhalter in der Abfrage mit den jeweiligen Parametern ersetzt werden müssen.
 Dabei bieten Prepared-Statements folgende Vorteile: zum einen weniger Overhead für das Parsen der Anfragen bei jeder Ausführung und außerdem Schutz vor SQL-Injections, da die zuvor übermittelten Anweisungen nur an den Platzhaltern geändert werden können und nur mit den jeweiligen richtigen Parameter-Datentypen.
 \subsubsection{Indices}
+Indices in Relationen werden genutzt, um Tupel effizient mit bestimmten Werten zu finden.
+Ohne einen Index für den zu suchenden Wert muss das MySQL-DBMS mit dem ersten Tupel beginnen und dann durch die gesamte Tabelle lesen.
+Dementsprechend kann das DBMS durch die Indices in einer Tabelle schnell die Position finden, an der die Tupel voran weiter durchsucht werden sollen.
 
 \subsubsection{Manuelles Commiten}
     Damit die Datenintegrität nur an semantisch sinnvollen Punkten sichergestellt wird, haben wir Autocommit deaktiviert.
