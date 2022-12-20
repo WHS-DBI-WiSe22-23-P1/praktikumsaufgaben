@@ -13,9 +13,74 @@ Last2: 3 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 300 TXs/s
 \subsubsection*{Version1}
 [Log: transactions\_last1]
 [Tablle: Gesamte Transaktionen / pro sekunde, Kontostands-TXs / pro sekunde, Analyse-TXs / pro sekunde, Einzahlungs-TXs / pro sekunde]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXS
+            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
+            \hline\hline
+            1 & 20.718 & 2.021 & 386 & 217 & 69 \\
+            \hline
+            2 & 20.740 & 1.763 & 381 & 219 & 69 \\
+            \hline
+            3 & 20.785 & 1.731 & 376 & 214 & 69 \\
+            \hline
+            4 &&&&&\\
+            \hline
+            5 &&&&&\\
+
+        \end{tabular}
+        \caption{Messungen Last 1}
+        \label{Tabelle 1}
+    \end{center}
+\end{table}
 \subsection{Last2: Benchmark für 5+5 remote Load Driver}\label{subsec:benchmark-5-5-remote-load-driver}
-\subsubsection*{Version1}
+
 [Log: transactions\_last2]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXs
+            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
+            \hline\hline
+            1 & 39.737 & 2.545 & 412 & 418 & 132 \\
+            \hline
+            2 & 39.777 & 2.524 & 407 & 413 & 133 \\
+            \hline
+            3 & 39.912 & 2.614 & 414 & 420 & 133 \\
+            \hline
+            4 &&&&&\\
+            \hline
+            5 &&&&&\\
+
+        \end{tabular}
+        \caption{Messungen Last 2}
+        \label{Tabelle 2}
+    \end{center}
+\end{table}
 \subsection{Last3: Benchmark für 5+5+5 remote Load Driver}\label{subsec:benchmark-5-5-5-remote-load-driver}
-\subsubsection*{Version1}
 [Log: transactions\_last3]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXS
+            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
+            \hline\hline
+            1 & 51.080 & 2.644 & 505 & 326 & 170 \\
+            \hline
+            2 & 54.824 & 2.103 & 438 & 468 & 183 \\
+            \hline
+            3 & 54.754 & 2.152 & 435 & 467 & 182 \\
+            \hline
+            4 &&&&&\\
+            \hline
+            5 &&&&&\\
+
+        \end{tabular}
+        \caption{Messungen Last 3}
+        \label{Tabelle 3}
+    \end{center}
+\end{table}
