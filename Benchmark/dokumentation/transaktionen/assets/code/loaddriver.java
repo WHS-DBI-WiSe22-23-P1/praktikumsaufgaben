@@ -26,11 +26,15 @@ public class LoadDriver {
             new Thread(() -> {
                 try {
                     withConnection(connection -> {
-                        RandomNTPSDatenbankTransaktionen ntpsDatenbankTransaktion = new RandomNTPSDatenbankTransaktionen(new NTPSDatenbankTransaktion(connection), 100);
+                        NTPSDatenbankTransaktion ntpsDatenbankTransaktion = new NTPSDatenbankTransaktion(connection);
+                        ntpsDatenbankTransaktion.initialisePreparedStatements();
+
+                        RandomNTPSDatenbankTransaktionen randomNTPSDatenbankTransaktionen = new RandomNTPSDatenbankTransaktionen(ntpsDatenbankTransaktion, 100);
                         final Map<String, Pair<Double, Runnable>> transactions = new HashMap<>();
-                        transactions.put("Kontostands TX", new Pair<>(35.0, ntpsDatenbankTransaktion::getBalanceFromAccount));
-                        transactions.put("Einzahlungs TX", new Pair<>(50.0, ntpsDatenbankTransaktion::updateBalance));
-                        transactions.put("Analyse TX", new Pair<>(15.0, ntpsDatenbankTransaktion::getNumberOfDeltaBalance));
+                        transactions.put("Kontostands TX", new Pair<>(35.0, randomNTPSDatenbankTransaktionen::getBalanceFromAccount));
+                        transactions.put("Einzahlungs TX", new Pair<>(50.0, randomNTPSDatenbankTransaktionen::updateBalance));
+                        transactions.put("Analyse TX", new Pair<>(15.0, randomNTPSDatenbankTransaktionen::getNumberOfDeltaBalance));
+
                         try {
                             new LoadDriver(thinkTime, transactions, phases).drive();
                         } catch (InterruptedException e) {
@@ -64,10 +68,11 @@ public class LoadDriver {
     }
 
     private void printResult() {
-        System.out.printf("Run %d transactions in %d seconds, that is %d transactions per second!%n", transactionsRun, measurePhaseTime.toSeconds(), transactionsRun / measurePhaseTime.toSeconds());
+        System.out.printf("Run %d transactions in %.3f seconds, that is %.2f transactions per second!%n", transactionsRun, (measurePhaseTime.toMillis() / 1000f), transactionsRun /  (measurePhaseTime.toMillis() / 1000f));
         for(final String transactionName : stats.keySet()) {
             final Pair<Integer, Duration> myStats = stats.get(transactionName);
-            System.out.printf("\tRun %d %s in %d seconds, that is %d transactions per second!%n", myStats.getKey(), transactionName, myStats.getValue().toSeconds(), myStats.getKey() / myStats.getValue().toSeconds());
+
+            System.out.printf("\tRun %d %s in  %.3f seconds, that is %.2f transactions per second!%n", myStats.getKey(), transactionName, (myStats.getValue().toMillis() / 1000f), myStats.getKey() / (myStats.getValue().toMillis() / 1000f));
         }
     }
 

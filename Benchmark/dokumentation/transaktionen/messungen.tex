@@ -1,86 +1,87 @@
 \subsection{Maximaler erreichbarer Transaktionsdurchsatz}\label{subsec:maximaler-erreichbarer-transaktionsdurchsatz}
-Messzeitraum: 300s (5 min)
-begrenzende Variable: Think-Time (50 ms / 0,05 s)
-maximale erreichbare Transaktionen pro Thread im Loaddriver: 6.000 TXs / 20 TXs/s
-[Verteilung der Ausführung der Lasttransaktionen durch die relative Gewichtung:
-    Kontostands-TX: 2.100 TXs (35\%)
-    Einzahlungs-TX: 3.000 TXs (50\%)
-    Analyse-TX:     900 TXs   (15\%)]
-Last1: 5 x Loaddriver-Threads * 20 TXs/s = 100 TXs/s
-Last2: 2 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 200 TXs/s
-Last2: 3 x Client-Rechner (5 x Loaddriver-Threads * 20 TXs/s) = 300 TXs/s
+Um den maximalen erreichbaren Transaktionsdurchsatz zu berechnen, müssen nur die begrenzenden Variablen, in diesem Fall Think-Time mit 50 ms, angeschaut werden.
+Infolgedessen wird theoretisch angenommen, dass die verschiedenen Lasttransaktionen bei der Ausführung keine Zeit beanspruchen.
+Schließlich ergibt sich dann aus dem Messzeitraum von 300s (5 min) und der begrenzenden Variable mit 0,05s der maximale erreichbare Transaktionsdurchsatz pro Thread im Loaddriver von 6.000 TXs (300s / 0,05s) und somit 20 TXs pro Sekunde.
+Außerdem kann aus der relativen Gewichtung für die unterschiedlichen Lasttransaktionen folgende Verteilung der Transaktionsanzahl der verschiedenen Lasttransaktionen und Last-Profilen bestimmt werden.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Lasttransaktion & relative Gewichtung [\%] & Transaktionsanzahl [TXs] \\  \hline
+        Kontostands-TX & 35 & 2.100 \\ \hline
+        Einzahlungs-TX & 50 & 3.000 \\ \hline
+        Analyse-TX & 15 & 900 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für die Verteilung der Transaktionsanzahl der unterschiedlichen Lasttransaktionen bei verschiedenen relativen Gewichtungen}
+    \label{tab:1}
+\end{table}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|c|}
+        \hline
+        Last & Berechnung [\%] & Transaktionsdurchsatz [TXs/s] \\  \hline
+        Last1 & 5 x Threads * 20 TXs/s & 100 \\ \hline
+        Last2 & 2 x Client (5 x Threads * 20 TXs/s) & 200 \\ \hline
+        Last3 & 3 x Client (5 x Threads * 20 TXs/s) & 300 \\ \hline
+    \end{tabular}
+    \caption{Tabelle für den Transaktiondurchsatz pro Sekunde bei den verschiedenen Last-Profilen}
+    \label{tab:2}
+\end{table}
+
 \subsection{Last1: Benchmark für 5 remote Load Driver}\label{subsec:benchmark-5-remote-load-driver}
-\subsubsection*{Version1}
-[Log: transactions\_last1]
-[Tablle: Gesamte Transaktionen / pro sekunde, Kontostands-TXs / pro sekunde, Analyse-TXs / pro sekunde, Einzahlungs-TXs / pro sekunde]
-\begin{table}[h]
-    \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|}
-            \hline
-            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXS
-            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
-            \hline\hline
-            1 & 20.718 & 2.021 & 386 & 217 & 69 \\
-            \hline
-            2 & 20.740 & 1.763 & 381 & 219 & 69 \\
-            \hline
-            3 & 20.785 & 1.731 & 376 & 214 & 69 \\
-            \hline
-            4 &&&&&\\
-            \hline
-            5 &&&&&\\
-
-        \end{tabular}
-        \caption{Messungen Last 1}
-        \label{Tabelle 1}
-    \end{center}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Version & Gesamte TXs & Kontostands-TXs & Analyse-TXs & Einzahlungs-TXs & TXs \\  \hline
+        1 & 20.718 & 2.021 & 386 & 217 & 69 \\ \hline
+        2 & 20.740 & 1.763 & 381 & 219 & 69 \\ \hline
+        3 & 20.785 & 1.731 & 376 & 214 & 69 \\ \hline
+        4 & 21.347 & 2.177 & 2.390 & 234 & 71 \\ \hline
+        5 & 21.417 & 2.166 & 2.386 & 249 & 72 \\ \hline
+    \end{tabular}
+    \caption{Messergebnisse des Benchmarks bei Last1 (Transaktionen pro Sekunde)}
+    \label{tab:3}
 \end{table}
+
+\newpage
+
 \subsection{Last2: Benchmark für 5+5 remote Load Driver}\label{subsec:benchmark-5-5-remote-load-driver}
-
-[Log: transactions\_last2]
 \begin{table}[h]
-    \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|}
-            \hline
-            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXs
-            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
-            \hline\hline
-            1 & 39.737 & 2.545 & 412 & 418 & 132 \\
-            \hline
-            2 & 39.777 & 2.524 & 407 & 413 & 133 \\
-            \hline
-            3 & 39.912 & 2.614 & 414 & 420 & 133 \\
-            \hline
-            4 &&&&&\\
-            \hline
-            5 &&&&&\\
-
-        \end{tabular}
-        \caption{Messungen Last 2}
-        \label{Tabelle 2}
-    \end{center}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Version & Gesamte TXs & Kontostands-TXs & Analyse-TXs  & Einzahlungs-TXs & TXs \\  \hline
+        1 & 39.737 & 2.545 & 412 & 418 & 132 \\ \hline
+        2 & 39.777 & 2.524 & 407 & 413 & 133 \\ \hline
+        3 & 39.912 & 2.614 & 414 & 420 & 133 \\ \hline
+        4 & 42.694 & 4.355 & 4.780 & 469 & 142 \\ \hline
+        5 & 42.835 & 4.333 & 4.773 & 498 & 143 \\ \hline
+    \end{tabular}
+    \caption{Messergebnisse des Benchmarks bei Last2 (Transaktionen pro Sekunde)}
+    \label{tab:4}
 \end{table}
+
 \subsection{Last3: Benchmark für 5+5+5 remote Load Driver}\label{subsec:benchmark-5-5-5-remote-load-driver}
-[Log: transactions\_last3]
 \begin{table}[h]
-    \begin{center}
+    \centering
         \begin{tabular}{|c|c|c|c|c|c|}
             \hline
-            \textbf{Version} & \textbf{Gesamte Transaktionen} &  \textbf{Kontostands-TXS
-            s [TXs/s]} &  \textbf{Analyse-Txs [TXs/s]} &  \textbf{Einzahlungs-TXs [TXs/s]} &  \textbf{Transaktionen pro Sekunde}\\
-            \hline\hline
-            1 & 51.080 & 2.644 & 505 & 326 & 170 \\
-            \hline
-            2 & 54.824 & 2.103 & 438 & 468 & 183 \\
-            \hline
-            3 & 54.754 & 2.152 & 435 & 467 & 182 \\
-            \hline
-            4 &&&&&\\
-            \hline
-            5 &&&&&\\
-
+            Version & Gesamte TXs & Kontostands-TXs & Analyse-TXs  & Einzahlungs-TXs & TXs \\  \hlinen
+            1 & 51.080 & 2.644 & 505 & 326 & 170 \\ \hline
+            2 & 54.824 & 2.103 & 438 & 468 & 183 \\ \hline
+            3 & 54.754 & 2.152 & 435 & 467 & 182 \\ \hline
+            4 & 63.997 & 6.514 & 7.197 & 735 & 213 \\ \hline
+            5 & 64.299 & 6.492 & 7.229 & 764 & 228 \\ \hline
         \end{tabular}
-        \caption{Messungen Last 3}
-        \label{Tabelle 3}
-    \end{center}
+        \caption{Messergebnisse des Benchmarks bei Last3 (Transaktionen pro Sekunde)}
+        \label{tab:5}
 \end{table}
+
+[Last1-Version1: 69 \% zum maximalen erreichbaren Transaktionsdurchsatz (69 TXs/s)]
+[Last1-Version5: 72 \% (72 TXs/s)] [=> 3 \% (3 TXs/s)]
+[Last2-Version1: 66 \% (132 TXs/s)]
+[Last2-Version5: 71 \% (143 TXs/s)] [=> 5,5 \% (11 TX/s)]
+[Last3-Version1: 56 \% (170 TXs/s)]
+[Last3-Version5: 76 \% (228 TXs/s)] [=> 19,4 \% (58 TX/s)]
+[=> Steigerung des Transaktionsdurchsatzes der Versionen (exponentiell / proportional) durch Optimierungen]
