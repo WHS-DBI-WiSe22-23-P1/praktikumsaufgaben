@@ -22,7 +22,7 @@ public class RandomNTPSDatenbankTransaktionen {
 
     public void getBalanceFromAccount() {
         try {
-            ntpsDatenbankTransaktion.getBalanceFromAccountWithInitialisedStatement(random.nextInt(acidLimit));
+            ntpsDatenbankTransaktion.getBalanceFromAccount(random.nextInt(acidLimit));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class RandomNTPSDatenbankTransaktionen {
 
     public void getNumberOfDeltaBalance() {
         try {
-            ntpsDatenbankTransaktion.getNumberOfDeltaBalanceWithInitialisedStatement(random.nextInt(1, DELTA_LIMIT));
+            ntpsDatenbankTransaktion.getNumberOfDeltaBalance(random.nextInt(1, DELTA_LIMIT));
         } catch (SQLException e) {
             e.printStackTrace();
         }

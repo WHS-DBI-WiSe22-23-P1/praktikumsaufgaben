@@ -17,7 +17,7 @@ public class NTPSDatenbankTransaktion {
     public NTPSDatenbankTransaktion(final @NotNull Connection connection) throws SQLException {
         this.connection = connection;
 
-        connection.setAutoCommit(false);
+        //connection.setAutoCommit(false);
     }
 
     public void initialisePreparedStatements() throws SQLException {
@@ -82,7 +82,7 @@ public class NTPSDatenbankTransaktion {
         updateValueTupel("tellerid", "balance","tellers", tellerId, delta);
 
         NTPSDatenbankErzeugen.insertHistory(connection, accId, tellerId, branchId, delta, updatedAccountBalance, comment);
-        connection.commit();
+        //connection.commit();
 
         return updatedAccountBalance;
     }
