@@ -25,7 +25,7 @@ Diese Idee haben wir allerdings verworfen, da bei der Verwendung von Prepared St
 Stored Procedures sind kleine abgespeicherte Datenbank-Programme, die wiederholende SQL-Befehlsfolgen zu einer Einheit zusammenfassen und in der Datenbank abgelegt werden.
 Der Prozeduraufruf wird dann nur noch ein mal zum Server geschickt und dann erfolgen alle Aufrufe innerhalb der Datenbank.
 Eine mögliche Umsetzung mittels SQL-Code würde, wie nachfolgend zu sehen, umsetzbar sein.
-\lstinputlisting[breaklines,language=SQL,label={lst:stored-procedure},caption={SQL Code zum Erstellen und Ablegen einer Stored Procedure im DBMS}]{assets/code/storedProcedure.sql}
+\lstinputlisting[breaklines,language=SQL,label={lst:stored-procedure},caption={SQL Code zum Erstellen und Ablegen des Stored Procedures für die Einzahlungstransaktion im DBMS}]{assets/code/storedProcedure.sql}
 \subsection{Programmcode}\label{subsec:programmcode}
 \subsubsection{Views - Version 2}
 Die Views wurden nur für die Kontostandtransaktion und der Analysetransaktion umgesetzt, da diese beiden ein SELECT-Statement ausführen, das sich für Database Views eignet.
