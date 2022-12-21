@@ -6,7 +6,7 @@ Diese sogenannten Database Views sind gespeicherte Abfragen, die beim Aufrufen e
 Per Definition ist eine View eine benannte Abfrage, die im Datenbankkatalog gespeichert ist.
 
 \subsubsection{Initialisierte Prepared-Statements}
-Als zweite Verbesserung das Initialisieren der Prepared-Statements während dem Start.
+Als zweite Verbesserung kann die Initialisierung der Prepared-Statements während des Starts umgesetzt werden.
 Diese werden serverseitig vorbereitet, sodass nur noch die Platzhalter in der Abfrage mit den jeweiligen Parametern ersetzt werden müssen.
 Dabei bieten Prepared-Statements folgende Vorteile: zum einen weniger Overhead für das Parsen der Anfragen bei jeder Ausführung und außerdem Schutz vor SQL-Injections, da die zuvor übermittelten Anweisungen nur an den Platzhaltern geändert werden können und nur mit den jeweiligen richtigen Parameter-Datentypen.
 \subsubsection{Indices}
@@ -23,7 +23,7 @@ Um mehrere Transaktionen in einem an das DBMS zu übermitteln wollten wir zunäc
 Diese Idee haben wir allerdings verworfen, da bei der Verwendung von Prepared Statements, nicht mehrere verschiedene Prepared Statements demselben Batch hinzugefügt werden können.
 \subsubsection{Stored Procedure}
 Stored Procedures sind kleine abgespeicherte Datenbank-Programme, die wiederholende SQL-Befehlsfolgen zu einer Einheit zusammenfassen und in der Datenbank abgelegt werden.
-Der Prozeduraufruf wird dann nur noch ein mal zum Server geschickt und dann erfolgen alle Aufrufe innerhalb der Datenbank.
+Der Prozeduraufruf wird dann nur noch einmal zum Server geschickt und dann erfolgen alle Aufrufe innerhalb der Datenbank.
 Eine mögliche Umsetzung mittels SQL-Code würde, wie nachfolgend zu sehen, umsetzbar sein.
 \lstinputlisting[breaklines,language=SQL,label={lst:stored-procedure},caption={SQL Code zum Erstellen und Ablegen des Stored Procedures für die Einzahlungstransaktion im DBMS}]{assets/code/storedProcedure.sql}
 \subsection{Programmcode}\label{subsec:programmcode}
@@ -34,7 +34,7 @@ Dabei muss vor der Nutzung der Views im Programmcode diese in der Datenbank hint
 \lstinputlisting[breaklines,language=SQL,label={lst:version2-createViewAccountsBalanceNumbers},caption={SQL Statement zur Erstellung der View für die Analysetransaktion}]{assets/code/version2/createViewAccountsBalanceNumbers.sql}
 
 \subsubsection{Initialisierte Prepared-Statements - Version 3}
-Das Initialisieren der Prepared-Statements während dem Start verbessert die Performance der einzelnen Transaktionen (Kontostand-TX und Analyse-TX).
+Das Initialisieren der Prepared-Statements während des Starts verbessert die Performance der einzelnen Transaktionen (Kontostand-TX und Analyse-TX).
 Siehe \hyperref[subsec:version3]{\textbf{Dokumentation-Version 3}}.
 
 \subsubsection{Indices - Version 4}

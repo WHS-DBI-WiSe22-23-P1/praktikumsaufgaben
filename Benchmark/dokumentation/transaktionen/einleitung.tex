@@ -27,10 +27,10 @@ Diese sollen die bekannten ACID-Eigenschaften garantieren und werden nach einer 
     \item \textbf{Einzahlungs-TX} \\
     Eine Methode / Abfrage, die als Einzahlung eines Betrages agiert und eine Kontonummer (accid), Geldautomatennummer (tellerid), Zweigstellennummer (branchid) und eine Einzahlungsbetrag (delta) als Eingabeparamter erwartet.
     In dieser Transaktion werden Einzelaktionen durchgeführt, wie das Aktualisieren der Bilanzsumme (balance) zu den zugehörigen Nummern (accid, branchid, tellerid) in den verschiedenen Relationen (accounts, branches, tellers).
-    Des Weiterem das Erstellen eines Einzahlungsbelegs in der Relation history mit den zugehörigen Nummern (accid, branchid, tellerid), den Einzahlungsbetrag (delta), den aktualisierten Betrag (accbalance) von der Relation accounts, sowie einen Kommentar (cmmnt).
+    Des Weiteren das Erstellen eines Einzahlungsbelegs in der Relation history mit den zugehörigen Nummern (accid, branchid, tellerid), den Einzahlungsbetrag (delta), den aktualisierten Betrag (accbalance) von der Relation accounts, sowie einen Kommentar (cmmnt).
     Als Rückgabewert wird der aktualisierte Betrag (accblance) von der Relation accounts zurückgeben.
     \item \textbf{Analyse-TX} \\
-    Eine Methode / Abfrage zur Rückgabe der Anzahl der getätigten Einzahlugen mit genau einem Betrags (delta), der als Eingabeparameter übergeben wird.
+    Eine Methode / Abfrage zur Rückgabe der Anzahl der getätigten Einzahlugen mit genau einem Betrag (delta), der als Eingabeparameter übergeben wird.
 \end{enumerate}
 
 \subsection{Load-Driver-Programm}\label{subsec:load-driver-programm}
